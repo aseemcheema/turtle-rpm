@@ -81,8 +81,10 @@ if show_positions:
     
     positions_df["P&L %"] = positions_df.apply(
         lambda row: ((row["Current Price"] - row["Entry Price"]) / row["Entry Price"] * 100)
-        if row["Direction"] == "Long"
-        else ((row["Entry Price"] - row["Current Price"]) / row["Entry Price"] * 100),
+        if row["Direction"] == "Long" and row["Entry Price"] > 0
+        else ((row["Entry Price"] - row["Current Price"]) / row["Entry Price"] * 100)
+        if row["Direction"] == "Short" and row["Entry Price"] > 0
+        else 0,
         axis=1
     )
     

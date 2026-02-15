@@ -139,6 +139,10 @@ with st.expander("ℹ️ Turtle Trading Position Sizing Principles"):
     
     ```
     Dollar Risk = Account Balance × Risk %
-    Position Size = Dollar Risk ÷ (Entry Price - Stop Loss)
+    Risk per Unit = |Entry Price - Stop Loss|
+    Position Size = Dollar Risk ÷ Risk per Unit
     ```
+    
+    For Long positions: Risk per Unit = Entry Price - Stop Loss
+    For Short positions: Risk per Unit = Stop Loss - Entry Price
     """)
