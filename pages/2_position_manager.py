@@ -103,7 +103,8 @@ if show_positions:
     
     col1.metric("Total Positions", total_positions)
     col2.metric("Total Value", f"${total_value:,.2f}")
-    col3.metric("Total P&L", f"${total_pnl:,.2f}", delta=f"{(total_pnl/total_value*100):.2f}%")
+    pnl_pct = (total_pnl/total_value*100) if total_value > 0 else 0
+    col3.metric("Total P&L", f"${total_pnl:,.2f}", delta=f"{pnl_pct:.2f}%")
     col4.metric("Total Risk Exposure", f"${total_risk:,.2f}")
     
     st.markdown("---")
