@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODULE_PATH = BASE_DIR / "pages" / "1_position_builder.py"
 
 
-def load_module():
+def load_position_builder_module():
     spec = importlib.util.spec_from_file_location("position_builder", MODULE_PATH)
     module = importlib.util.module_from_spec(spec)
     sys.modules["position_builder"] = module
@@ -21,7 +21,7 @@ def load_module():
 
 class TestLoadPriceData(unittest.TestCase):
     def setUp(self):
-        self.module = load_module()
+        self.module = load_position_builder_module()
         if hasattr(self.module, "st") and hasattr(self.module.st, "cache_data"):
             self.module.st.cache_data.clear()
 

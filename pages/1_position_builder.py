@@ -6,8 +6,8 @@ parameters based on the Turtle Trading System principles.
 """
 
 import logging
-import pandas as pd
 
+import pandas as pd
 import streamlit as st
 import yfinance as yf
 from streamlit_lightweight_charts import renderLightweightCharts
@@ -52,11 +52,11 @@ def load_price_data(symbol: str, interval: str):
     history[date_col] = pd.to_datetime(history[date_col], errors="coerce")
     if isinstance(history[date_col].dtype, pd.DatetimeTZDtype):
         history[date_col] = history[date_col].dt.tz_convert(None)
-    invalid_dates = history[date_col].isna().sum()
-    if invalid_dates:
+    invalid_date_count = history[date_col].isna().sum()
+    if invalid_date_count:
         logger.warning(
             "Dropped %s rows with invalid %s values for %s %s",
-            invalid_dates,
+            invalid_date_count,
             date_col,
             interval,
             symbol,
