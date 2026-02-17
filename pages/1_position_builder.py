@@ -6,6 +6,7 @@ parameters based on the Turtle Trading System principles.
 """
 
 import logging
+
 import pandas as pd
 import streamlit as st
 import yfinance as yf

@@ -6,10 +6,8 @@ from pathlib import Path
 
 import pandas as pd
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODULE_PATH = BASE_DIR / "pages" / "1_position_builder.py"
-
 
 def load_position_builder_module():
     spec = importlib.util.spec_from_file_location("position_builder", MODULE_PATH)
