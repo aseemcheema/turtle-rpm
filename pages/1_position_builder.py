@@ -6,6 +6,7 @@ parameters based on the Turtle Trading System principles.
 """
 
 import logging
+import pandas as pd
 
 import streamlit as st
 import yfinance as yf
@@ -35,11 +36,18 @@ def load_price_data(symbol: str, interval: str):
         return []
     
     history = history.dropna().reset_index()
-    date_col = "Date" if "Date" in history.columns else "Datetime"
+    if "Date" in history.columns:
+        date_col = "Date"
+    elif "Datetime" in history.columns:
+        date_col = "Datetime"
+    else:
+        date_col = history.columns[0]
+    history[date_col] = pd.to_datetime(history[date_col], errors="coerce")
+    history = history.dropna(subset=[date_col])
     
     return [
         {
-            "time": row[date_col].strftime("%Y-%m-%d"),
+            "time": row[date_col].date().isoformat(),
             "open": float(row["Open"]),
             "high": float(row["High"]),
             "low": float(row["Low"]),
