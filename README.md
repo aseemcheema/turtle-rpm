@@ -15,7 +15,7 @@ Risk and portfolio management tool for the Turtle trading system. Built with Str
 2. Create and activate a virtual environment (example using `venv`):
    ```bash
    python -m venv .venv
-   source .venv/bin/activate  # On Windows use: .venv\\Scripts\\activate
+   source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
    ```
 3. Install dependencies from `pyproject.toml`:
    ```bash
