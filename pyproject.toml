@@ -5,4 +5,6 @@ description = "Risk and portfolio management tool for the Turtle trading system"
 requires-python = ">=3.12"
 dependencies = [
     "streamlit>=1.31.0",
+    "yfinance>=1.2.0",
+    "streamlit-lightweight-charts>=0.7.20",
 ]

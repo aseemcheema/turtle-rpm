@@ -5,12 +5,50 @@ This page allows users to build new positions with proper risk management
 parameters based on the Turtle Trading System principles.
 """
 
+import logging
+
 import streamlit as st
+import yfinance as yf
+from streamlit_lightweight_charts import renderLightweightCharts
 
 st.set_page_config(page_title="Position Builder", page_icon="📊", layout="wide")
 
 st.title("📊 Position Builder")
 st.subheader("Create New Trading Positions")
+logger = logging.getLogger(__name__)
+
+TIMEFRAMES = {
+    "Daily": "1d",
+    "Weekly": "1wk",
+    "Monthly": "1mo",
+}
+
+@st.cache_data(show_spinner=False)
+def load_price_data(symbol: str, interval: str):
+    try:
+        history = yf.download(symbol, period="10y", interval=interval, progress=False)
+    except Exception as exc:
+        logger.exception("Failed to download %s data for %s", interval, symbol)
+        return []
+    
+    if history.empty:
+        return []
+    
+    history = history.dropna().reset_index()
+    date_col = "Date" if "Date" in history.columns else "Datetime"
+    
+    return [
+        {
+            "time": row[date_col].strftime("%Y-%m-%d"),
+            "open": float(row["Open"]),
+            "high": float(row["High"]),
+            "low": float(row["Low"]),
+            "close": float(row["Close"]),
+        }
+        for _, row in history.iterrows()
+    ]
+
+st.caption("Enter a symbol to load price history. Use the timeframe buttons to switch views.")
 
 # Main content area
 col1, col2 = st.columns(2)
@@ -97,6 +135,52 @@ with col2:
             suggested_size = int(dollar_risk / risk_per_unit)
             st.metric("Suggested Position Size", f"{suggested_size} units")
             st.caption(f"Based on ${dollar_risk:.2f} risk (${account_balance:,.2f} × {risk_percentage}%)")
+
+st.markdown("---")
+
+st.header("Price Chart")
+timeframe_choice = st.radio("Timeframe", list(TIMEFRAMES.keys()), horizontal=True)
+symbol_clean = symbol.strip().upper()
+
+if symbol_clean:
+    with st.spinner(f"Loading {symbol_clean} {timeframe_choice.lower()} data..."):
+        price_data = load_price_data(symbol_clean, TIMEFRAMES[timeframe_choice])
+    
+    if price_data:
+        renderLightweightCharts(
+            [
+                {
+                    "chart": {
+                        "layout": {
+                            "background": {"type": "solid", "color": "#0e1117"},
+                            "textColor": "#d1d5db",
+                        },
+                        "height": 380,
+                        "rightPriceScale": {"borderColor": "rgba(197,203,206,0.4)"},
+                        "timeScale": {"borderColor": "rgba(197,203,206,0.4)"},
+                    },
+                    "series": [
+                        {
+                            "type": "candlestick",
+                            "data": price_data,
+                            "options": {
+                                "upColor": "#26a69a",
+                                "downColor": "#ef5350",
+                                "borderUpColor": "#26a69a",
+                                "borderDownColor": "#ef5350",
+                                "wickUpColor": "#26a69a",
+                                "wickDownColor": "#ef5350",
+                            },
+                        }
+                    ],
+                }
+            ],
+            key=f"chart-{symbol_clean}-{TIMEFRAMES[timeframe_choice]}",
+        )
+    else:
+        st.warning("No price data available for this symbol/timeframe.")
+else:
+    st.info("Enter a symbol to load the TradingView-style chart.")
 
 st.markdown("---")
 
