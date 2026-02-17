@@ -19,7 +19,7 @@ def load_module():
     return module
 
 
-class LoadPriceDataTests(unittest.TestCase):
+class TestLoadPriceData(unittest.TestCase):
     def setUp(self):
         self.module = load_module()
         if hasattr(self.module, "st") and hasattr(self.module.st, "cache_data"):

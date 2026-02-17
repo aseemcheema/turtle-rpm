@@ -45,9 +45,9 @@ def load_price_data(symbol: str, interval: str):
             col for col in history.columns
             if pd.api.types.is_datetime64_any_dtype(history[col])
         ]
-        date_col = datetime_cols[0] if datetime_cols else None
-    if date_col is None:
-        return []
+        if not datetime_cols:
+            return []
+        date_col = datetime_cols[0]
 
     history[date_col] = pd.to_datetime(history[date_col], errors="coerce")
     if isinstance(history[date_col].dtype, pd.DatetimeTZDtype):
