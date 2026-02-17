@@ -52,6 +52,15 @@ def load_price_data(symbol: str, interval: str):
     history[date_col] = pd.to_datetime(history[date_col], errors="coerce")
     if isinstance(history[date_col].dtype, pd.DatetimeTZDtype):
         history[date_col] = history[date_col].dt.tz_convert(None)
+    invalid_dates = history[date_col].isna().sum()
+    if invalid_dates:
+        logger.warning(
+            "Dropped %s rows with invalid %s values for %s %s",
+            invalid_dates,
+            date_col,
+            interval,
+            symbol,
+        )
     history = history.dropna(subset=[date_col])
     if history.empty:
         return []
