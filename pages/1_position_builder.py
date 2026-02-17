@@ -41,9 +41,15 @@ def load_price_data(symbol: str, interval: str):
     elif "Datetime" in history.columns:
         date_col = "Datetime"
     else:
-        date_col = history.columns[0]
+        datetime_cols = [
+            col for col in history.columns
+            if pd.api.types.is_datetime64_any_dtype(history[col])
+        ]
+        date_col = datetime_cols[0] if datetime_cols else history.columns[0]
     history[date_col] = pd.to_datetime(history[date_col], errors="coerce")
     history = history.dropna(subset=[date_col])
+    if history.empty:
+        return []
     
     return [
         {
