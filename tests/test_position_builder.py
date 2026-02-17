@@ -7,7 +7,8 @@ from pathlib import Path
 import pandas as pd
 
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "pages" / "1_position_builder.py"
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODULE_PATH = BASE_DIR / "pages" / "1_position_builder.py"
 
 
 def load_module():
@@ -21,7 +22,8 @@ def load_module():
 class LoadPriceDataTests(unittest.TestCase):
     def setUp(self):
         self.module = load_module()
-        self.module.st.cache_data.clear()
+        if hasattr(self.module, "st") and hasattr(self.module.st, "cache_data"):
+            self.module.st.cache_data.clear()
 
     def test_load_price_data_formats_dates_from_index(self):
         self.module.yf = types.SimpleNamespace(

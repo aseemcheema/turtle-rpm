@@ -45,15 +45,20 @@ def load_price_data(symbol: str, interval: str):
             col for col in history.columns
             if pd.api.types.is_datetime64_any_dtype(history[col])
         ]
-        date_col = datetime_cols[0] if datetime_cols else history.columns[0]
+        date_col = datetime_cols[0] if datetime_cols else None
+    if date_col is None:
+        return []
+
     history[date_col] = pd.to_datetime(history[date_col], errors="coerce")
+    if isinstance(history[date_col].dtype, pd.DatetimeTZDtype):
+        history[date_col] = history[date_col].dt.tz_convert(None)
     history = history.dropna(subset=[date_col])
     if history.empty:
         return []
     
     return [
         {
-            "time": row[date_col].date().isoformat(),
+            "time": row[date_col].strftime("%Y-%m-%d"),
             "open": float(row["Open"]),
             "high": float(row["High"]),
             "low": float(row["Low"]),
