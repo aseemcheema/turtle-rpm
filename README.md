@@ -31,3 +31,8 @@ streamlit run app.py
 ```
 
 The app will start at http://localhost:8501 by default. Use the Streamlit sidebar to switch between the "Position Builder" and "Position Manager" tools located under the `pages/` directory.
+
+## E\*TRADE portfolio integration
+- Open the **Portfolio** page and enter your E\*TRADE consumer key and secret (use Sandbox keys for testing).
+- Click **Get Request Token**, follow the authorization URL, and paste the verification code.
+- Exchange for an access token, then use **Fetch Accounts** to obtain your `accountIdKey` and **Fetch Portfolio** to view holdings. Sandboxed tokens work against `apisb.etrade.com` while production tokens use `api.etrade.com`.
