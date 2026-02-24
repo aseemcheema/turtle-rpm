@@ -46,6 +46,3 @@ demonstrating that successful trading can be taught through a systematic approac
 to risk management and position sizing.
 """
 )
-
-with st.sidebar:
-    st.info("👈 Select a page from the navigation above or use the quick links to get started")
