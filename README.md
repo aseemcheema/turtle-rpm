@@ -3,7 +3,7 @@ Risk and portfolio management tool for the Turtle trading system. Built with Str
 
 ## Requirements
 - Python 3.12+
-- `pip` (or `uv`) for installing Python packages
+- `uv` for installing Python packages (or `pip` as an alternative)
 - Declared dependency: `streamlit>=1.31.0` (see `pyproject.toml`)
 
 ## Getting started
@@ -12,16 +12,16 @@ Risk and portfolio management tool for the Turtle trading system. Built with Str
    git clone https://github.com/aseemcheema/turtle-rpm.git
    cd turtle-rpm
    ```
-2. Create and activate a virtual environment (example using `venv`):
+2. Create and activate a virtual environment (using `uv`):
    ```bash
-   python -m venv .venv
+   uv venv .venv
    source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
    ```
 3. Install dependencies from `pyproject.toml`:
    ```bash
-   pip install -e .
-   # or with uv
    uv pip install -e .
+   # or with pip
+   pip install -e .
    ```
 
 ## Running the app from the terminal
