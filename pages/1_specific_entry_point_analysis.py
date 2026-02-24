@@ -25,7 +25,7 @@ def _cached_symbol_list(path: str) -> list[dict[str, str]]:
 st.set_page_config(page_title="Specific Entry Point Analysis", page_icon="📊", layout="wide")
 
 st.title("📊 Specific Entry Point Analysis")
-st.caption("Type at least one character, then pick a symbol from the list below.")
+st.caption("Press Enter or click outside the box to see suggestions; then pick a symbol from the list.")
 
 # Symbol selection: single input, suggestions only after 1+ char
 all_symbols = _cached_symbol_list(str(SYMBOLS_PATH))
@@ -39,6 +39,10 @@ if not all_symbols:
 else:
     if INPUT_KEY not in st.session_state:
         st.session_state[INPUT_KEY] = ""
+    # Apply pending display value from a previous run's selection (before widget is created)
+    if st.session_state.get("sepa_display_value") is not None:
+        st.session_state[INPUT_KEY] = st.session_state["sepa_display_value"]
+        del st.session_state["sepa_display_value"]
 
     user_input = st.text_input(
         "Symbol",
@@ -69,6 +73,9 @@ else:
             None,
         )
         default_index = display_options.index(current_match) if current_match else 0
+        # Avoid selectbox error when options changed: clear stored value if not in current list
+        if st.session_state.get("sepa_symbol_select") not in display_options:
+            st.session_state.pop("sepa_symbol_select", None)
         selected = st.selectbox(
             "Choose a symbol",
             options=display_options,
@@ -80,7 +87,7 @@ else:
             chosen_symbol = selected.split(" - ")[0].strip()
             symbol = chosen_symbol
             if st.session_state[INPUT_KEY] != chosen_symbol:
-                st.session_state[INPUT_KEY] = chosen_symbol
+                st.session_state["sepa_display_value"] = chosen_symbol
                 st.rerun()
     else:
         symbol = ""
