@@ -48,5 +48,3 @@ Thumbs.db
 *.tmp
 *.bak
 
-# Symbol data (downloaded by scripts/download_symbols.py)
-data/symbols.csv
