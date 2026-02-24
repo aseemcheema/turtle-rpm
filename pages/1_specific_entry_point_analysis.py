@@ -5,11 +5,11 @@ Specific Entry Point Analysis - Select a symbol (NYSE/NASDAQ).
 from pathlib import Path
 
 import streamlit as st
+from streamlit_searchbox import st_searchbox
 
 from turtle_rpm.symbols import load_symbols_from_file
 
 MAX_SUGGESTIONS = 200
-INPUT_KEY = "sepa_symbol_input"
 
 # Resolve path from this file so it works regardless of cwd (e.g. under st.navigation)
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -25,9 +25,8 @@ def _cached_symbol_list(path: str) -> list[dict[str, str]]:
 st.set_page_config(page_title="Specific Entry Point Analysis", page_icon="📊", layout="wide")
 
 st.title("📊 Specific Entry Point Analysis")
-st.caption("Press Enter or click outside the box to see suggestions; then pick a symbol from the list.")
+st.caption("Type to search; pick a symbol from the list (NYSE and NASDAQ).")
 
-# Symbol selection: single input, suggestions only after 1+ char
 all_symbols = _cached_symbol_list(str(SYMBOLS_PATH))
 
 if not all_symbols:
@@ -37,57 +36,24 @@ if not all_symbols:
     )
     symbol = ""
 else:
-    if INPUT_KEY not in st.session_state:
-        st.session_state[INPUT_KEY] = ""
-    # Apply pending display value from a previous run's selection (before widget is created)
-    if st.session_state.get("sepa_display_value") is not None:
-        st.session_state[INPUT_KEY] = st.session_state["sepa_display_value"]
-        del st.session_state["sepa_display_value"]
 
-    user_input = st.text_input(
-        "Symbol",
-        key=INPUT_KEY,
-        placeholder="Type at least 1 character (e.g. A or AAPL), then press Enter",
-        help="Symbol prefix match (NYSE/NASDAQ). List appears below after you type.",
-    )
-    query = (user_input or "").strip().lower()
-    symbol = ""
-
-    if len(query) >= 1:
+    def search_symbols(searchterm: str) -> list[tuple[str, str]]:
+        """Return (display_label, symbol) for prefix match on symbol. Only match after 1+ char."""
+        if not searchterm or not searchterm.strip():
+            return []
+        query = searchterm.strip().lower()
         filtered = [
             s
             for s in all_symbols
             if s["symbol"].lower().startswith(query)
         ][:MAX_SUGGESTIONS]
-        display_options = ["— Select a symbol —"] + [
-            f"{s['symbol']} - {s['name']}" for s in filtered
-        ]
-        # Preselect if current input matches an option
-        current_match = next(
-            (
-                opt
-                for opt in display_options
-                if opt != "— Select a symbol —"
-                and opt.split(" - ")[0].strip().upper() == (user_input or "").strip().upper()
-            ),
-            None,
-        )
-        default_index = display_options.index(current_match) if current_match else 0
-        # Avoid selectbox error when options changed: clear stored value if not in current list
-        if st.session_state.get("sepa_symbol_select") not in display_options:
-            st.session_state.pop("sepa_symbol_select", None)
-        selected = st.selectbox(
-            "Choose a symbol",
-            options=display_options,
-            index=default_index,
-            key="sepa_symbol_select",
-            help="Pick a symbol to select it.",
-        )
-        if selected and selected != "— Select a symbol —":
-            chosen_symbol = selected.split(" - ")[0].strip()
-            symbol = chosen_symbol
-            if st.session_state[INPUT_KEY] != chosen_symbol:
-                st.session_state["sepa_display_value"] = chosen_symbol
-                st.rerun()
-    else:
-        symbol = ""
+        return [(f"{s['symbol']} - {s['name']}", s["symbol"]) for s in filtered]
+
+    symbol = st_searchbox(
+        search_symbols,
+        label="Symbol",
+        placeholder="Type to search (e.g. A or AAPL)",
+        key="sepa_symbol_searchbox",
+        help="Symbol prefix match. Suggestions update as you type.",
+    )
+    symbol = symbol or ""
