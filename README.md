@@ -30,7 +30,11 @@ With the virtual environment activated and dependencies installed:
 streamlit run app.py
 ```
 
-The app will start at http://localhost:8501 by default. Use the Streamlit sidebar to switch between the "Position Builder" and "Position Manager" tools located under the `pages/` directory.
+The app will start at http://localhost:8501 by default. Use the Streamlit sidebar to switch between:
+
+- **Home** (overview and quick links)
+- **Specific Entry Point Analysis** (analyze a single symbol and size trades)
+- **Portfolio** (connect to E*TRADE and view accounts/holdings)
 
 ## E\*TRADE portfolio integration
 - Open the **Portfolio** page and enter your E\*TRADE consumer key and secret (use Sandbox keys for testing).
