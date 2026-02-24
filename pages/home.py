@@ -16,32 +16,26 @@ based on the legendary Turtle Trading System.
 
 st.markdown("### Tools in this app")
 
-st.write(
-    """
-Use the navigation to access:
+st.caption("Use the navigation or the links below to access each tool.")
 
-- **Home**: This overview page and entry point to the rest of the app.
-- **Specific Entry Point Analysis**: Analyze a single symbol's entry setup, visualize historical
-  price action, and size a position using Turtle-style risk rules.
-- **Portfolio**: Connect to your E*TRADE account (Sandbox or Production) and inspect accounts
-  and portfolio holdings.
-"""
+st.page_link("pages/home.py", label="Home", icon="🏠")
+st.caption("This overview page and entry point to the rest of the app.")
+
+st.page_link(
+    "pages/1_specific_entry_point_analysis.py",
+    label="Specific Entry Point Analysis",
+    icon="📊",
+)
+st.caption(
+    "Analyze a single symbol's entry setup, visualize historical price action, "
+    "and size a position using Turtle-style risk rules."
 )
 
-st.markdown("### Quick links")
-
-# Title-style quick links: one icon per link, labels as titles
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.page_link("pages/home.py", label="Home", icon="🏠")
-with c2:
-    st.page_link(
-        "pages/1_specific_entry_point_analysis.py",
-        label="Specific Entry Point Analysis",
-        icon="📊",
-    )
-with c3:
-    st.page_link("pages/3_portfolio.py", label="Portfolio", icon="💼")
+st.page_link("pages/3_portfolio.py", label="Portfolio", icon="💼")
+st.caption(
+    "Connect to your E*TRADE account (Sandbox or Production) and inspect accounts "
+    "and portfolio holdings."
+)
 
 st.markdown("### About the Turtle Trading System")
 
