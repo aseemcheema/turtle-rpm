@@ -226,7 +226,7 @@ st.markdown("---")
 col1, col2, col3 = st.columns([1, 1, 4])
 
 with col1:
-    if st.button("📝 Create Position", type="primary", use_container_width=True):
+    if st.button("📝 Create Position", type="primary", width="stretch"):
         if symbol and entry_price > 0 and position_size > 0:
             st.success(f"Position created: {direction} {position_size} {symbol} @ ${entry_price:.2f}")
             st.info("💡 Navigate to Position Manager to view and manage this position")
@@ -234,7 +234,7 @@ with col1:
             st.error("Please fill in all required fields (Symbol, Entry Price, Position Size)")
 
 with col2:
-    if st.button("🔄 Reset", use_container_width=True):
+    if st.button("🔄 Reset", width="stretch"):
         st.rerun()
 
 # Information section

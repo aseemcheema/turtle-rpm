@@ -139,21 +139,21 @@ if show_positions:
     
     if highlight_risk:
         styled_df = display_df.style.apply(highlight_risk_rows, axis=1)
-        st.dataframe(styled_df, use_container_width=True, hide_index=True)
+        st.dataframe(styled_df, width="stretch", hide_index=True)
     else:
-        st.dataframe(display_df, use_container_width=True, hide_index=True)
+        st.dataframe(display_df, width="stretch", hide_index=True)
     
     # Action buttons for positions
     st.markdown("#### Position Actions")
     col1, col2, col3 = st.columns([1, 1, 4])
     
     with col1:
-        if st.button("🔄 Refresh Positions", use_container_width=True):
+        if st.button("🔄 Refresh Positions", width="stretch"):
             st.cache_data.clear()
             st.rerun()
     
     with col2:
-        if st.button("📤 Export Positions", use_container_width=True):
+        if st.button("📤 Export Positions", width="stretch"):
             st.info("Export functionality will be available in future updates")
 
 # Orders section
@@ -169,18 +169,18 @@ if show_orders:
         display_orders["Created"] = display_orders["Created"].dt.strftime("%Y-%m-%d %H:%M")
         display_orders["Order Price"] = display_orders["Order Price"].apply(lambda x: f"${x:.2f}")
         
-        st.dataframe(display_orders, use_container_width=True, hide_index=True)
+        st.dataframe(display_orders, width="stretch", hide_index=True)
         
         # Action buttons for orders
         col1, col2, col3 = st.columns([1, 1, 4])
         
         with col1:
-            if st.button("🔄 Refresh Orders", use_container_width=True):
+            if st.button("🔄 Refresh Orders", width="stretch"):
                 st.cache_data.clear()
                 st.rerun()
         
         with col2:
-            if st.button("❌ Cancel All Orders", use_container_width=True):
+            if st.button("❌ Cancel All Orders", width="stretch"):
                 st.warning("Order cancellation functionality will be available in future updates")
     else:
         st.info("No open orders at this time")
