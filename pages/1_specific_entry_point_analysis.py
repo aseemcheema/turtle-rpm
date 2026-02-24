@@ -114,15 +114,15 @@ with col1:
     else:
         symbol_search = st.text_input(
             "Search symbol",
-            placeholder="Type to narrow (e.g. AAPL or Apple)",
-            help="Filter the list by symbol or company name, then select below.",
+            placeholder="Type symbol (e.g. AAPL)",
+            help="Filter by symbol only (prefix match). Select from the list below.",
         )
         query = (symbol_search or "").strip().lower()
         if query:
             filtered = [
                 s
                 for s in all_symbols
-                if query in s["symbol"].lower() or query in (s["name"] or "").lower()
+                if s["symbol"].lower().startswith(query)
             ][:MAX_SELECTBOX_OPTIONS]
         else:
             filtered = all_symbols[:MAX_SELECTBOX_OPTIONS]
