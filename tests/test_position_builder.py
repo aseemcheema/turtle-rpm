@@ -7,19 +7,20 @@ from pathlib import Path
 import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-MODULE_PATH = BASE_DIR / "pages" / "1_position_builder.py"
+MODULE_PATH = BASE_DIR / "pages" / "1_specific_entry_point_analysis.py"
 
-def load_position_builder_module():
-    spec = importlib.util.spec_from_file_location("position_builder", MODULE_PATH)
+
+def load_sepa_module():
+    spec = importlib.util.spec_from_file_location("sepa_page", MODULE_PATH)
     module = importlib.util.module_from_spec(spec)
-    sys.modules["position_builder"] = module
+    sys.modules["sepa_page"] = module
     spec.loader.exec_module(module)
     return module
 
 
 class TestLoadPriceData(unittest.TestCase):
     def setUp(self):
-        self.module = load_position_builder_module()
+        self.module = load_sepa_module()
         if hasattr(self.module, "st") and hasattr(self.module.st, "cache_data"):
             self.module.st.cache_data.clear()
 

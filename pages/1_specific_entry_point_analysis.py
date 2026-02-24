@@ -7,11 +7,22 @@ management parameters.
 """
 
 import logging
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 import yfinance as yf
 from streamlit_lightweight_charts import renderLightweightCharts
+
+from turtle_rpm.symbols import get_default_symbols_path, load_symbols_from_file
+
+MAX_SELECTBOX_OPTIONS = 200
+
+
+@st.cache_data(show_spinner=False)
+def _cached_symbol_list(path: str) -> list[dict[str, str]]:
+    """Load symbol list from CSV; cache by path so file changes can be picked up if path changes."""
+    return load_symbols_from_file(Path(path))
 
 st.set_page_config(page_title="Specific Entry Point Analysis", page_icon="📊", layout="wide")
 
@@ -90,12 +101,43 @@ col1, col2 = st.columns(2)
 with col1:
     st.header("Entry Details")
 
-    # Symbol selection
-    symbol = st.text_input(
-        "Symbol",
-        placeholder="e.g., AAPL, GOOGL, ES",
-        help="Enter the trading symbol you want to analyze",
-    )
+    # Symbol selection: typeahead dropdown from NYSE/NASDAQ list
+    symbols_path = str(get_default_symbols_path())
+    all_symbols = _cached_symbol_list(symbols_path)
+
+    if not all_symbols:
+        st.warning(
+            "Symbol list not found. Run `scripts/download_symbols.py` to populate "
+            "`data/symbols.csv` (see README)."
+        )
+        symbol = ""
+    else:
+        symbol_search = st.text_input(
+            "Search symbol",
+            placeholder="Type to narrow (e.g. AAPL or Apple)",
+            help="Filter the list by symbol or company name, then select below.",
+        )
+        query = (symbol_search or "").strip().lower()
+        if query:
+            filtered = [
+                s
+                for s in all_symbols
+                if query in s["symbol"].lower() or query in (s["name"] or "").lower()
+            ][:MAX_SELECTBOX_OPTIONS]
+        else:
+            filtered = all_symbols[:MAX_SELECTBOX_OPTIONS]
+        display_options = ["— Select a symbol —"] + [
+            f"{s['symbol']} - {s['name']}" for s in filtered
+        ]
+        selected = st.selectbox(
+            "Symbol",
+            options=display_options,
+            help="Choose a symbol from the list (NYSE and NASDAQ).",
+        )
+        if selected and selected != "— Select a symbol —":
+            symbol = selected.split(" - ")[0].strip()
+        else:
+            symbol = ""
 
     # Direction
     direction = st.radio(

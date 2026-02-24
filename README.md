@@ -36,6 +36,18 @@ The app will start at http://localhost:8501 by default. Use the Streamlit sideba
 - **Specific Entry Point Analysis** (analyze a single symbol and size trades)
 - **Portfolio** (connect to E*TRADE and view accounts/holdings)
 
+## Symbol list (SEPA page)
+
+The Specific Entry Point Analysis page uses a dropdown of NYSE and NASDAQ symbols. Populate the list by running:
+
+```bash
+python scripts/download_symbols.py
+# or
+uv run python scripts/download_symbols.py
+```
+
+This downloads the official NASDAQ Trader symbol file and writes `data/symbols.csv`. Without it, the SEPA symbol dropdown will be empty and the app will show instructions to run the script.
+
 ## E\*TRADE portfolio integration
 - Open the **Portfolio** page and enter your E\*TRADE consumer key and secret (use Sandbox keys for testing).
 - Click **Get Request Token**, follow the authorization URL, and paste the verification code.
