@@ -19,7 +19,7 @@
 
 ### 1.2 Libraries vs in-house
 
-- **Preferred libraries** (e.g. [pandas-ta](https://github.com/twopirllc/pandas-ta), [ta-lib](https://ta-lib.org/)): Use for **indicators** (e.g. ATR for volatility, volume profile) to support **VCP-style** "progressive contraction" (pullback depths 15% → 10% → 5%) and volume dry-up. Not required for v1; can add in a later phase.
+- **Preferred libraries** (e.g. [pandas-ta](https://github.com/twopirllc/pandas-ta), [ta-lib](https://ta-lib.org/)): Use for **indicators** (e.g. ATR for volatility, volume profile) to support **VCP-style** "progressive contraction" (pullback depths 15% → 10% → 5%) and volume dry-up.
 
 ### 1.3 Base quality (leadership profile – technical)
 
@@ -52,7 +52,7 @@ All evaluated at **current** price (or at base end date for historical view). Da
 
 - **Idea**: Each pullback in the base has smaller depth (e.g. 15% → 10% → 5%) and volume dries up on pullbacks.
 - **v1**: Can add a **simple VCP-style check** on the current base: e.g. "last two pullbacks in the base have decreasing depth?" using pivot lows and prior_high. Volume dry-up = compare avg volume on down weeks vs up weeks in the base. Label "VCP-like: Yes/No" or a score.
-- **Later**: Use ATR or pandas-ta for volatility contraction if a library is added.
+- **Volatility contraction**: Use pandas-ta ATR on daily data; require ATR at end of base < ATR at start of base to support VCP-style progressive contraction.
 
 ### 2.3 Relative Strength (RS)
 

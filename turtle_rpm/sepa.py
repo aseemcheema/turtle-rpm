@@ -13,6 +13,7 @@ from datetime import datetime
 from typing import Any
 
 import pandas as pd
+import pandas_ta as ta
 import yfinance as yf
 
 logger = logging.getLogger(__name__)
@@ -266,10 +267,14 @@ def _vcp_like(
     lows_in_segment: list[int],
     prior_high: float,
     df_weekly: pd.DataFrame,
+    df_daily: pd.DataFrame | None = None,
+    start_ts: pd.Timestamp | None = None,
+    end_ts: pd.Timestamp | None = None,
 ) -> bool:
     """
-    VCP-style: (1) Last two pullbacks have decreasing depth; (2) volume dries up on pullbacks.
-    Returns True if both conditions hold (simplified check).
+    VCP-style: (1) Last two pullbacks have decreasing depth; (2) volume dries up on pullbacks;
+    (3) if daily data with ATR is provided, volatility contracts (ATR at end of base < ATR at start).
+    Returns True when all applicable conditions hold.
     """
     if prior_high <= 0:
         return False
@@ -288,14 +293,27 @@ def _vcp_like(
         return False
     # Volume dry-up: avg volume on down weeks < avg volume on up weeks
     if "Volume" not in segment.columns:
-        return decreasing
-    up_weeks = segment["Close"] >= segment["Open"]
-    down_vol = segment.loc[~up_weeks, "Volume"].mean()
-    up_vol = segment.loc[up_weeks, "Volume"].mean()
-    if pd.isna(down_vol) or pd.isna(up_vol) or up_vol <= 0:
-        return decreasing
-    volume_dry_up = float(down_vol) < float(up_vol)
-    return decreasing and volume_dry_up
+        volume_ok = True
+    else:
+        up_weeks = segment["Close"] >= segment["Open"]
+        down_vol = segment.loc[~up_weeks, "Volume"].mean()
+        up_vol = segment.loc[up_weeks, "Volume"].mean()
+        if pd.isna(down_vol) or pd.isna(up_vol) or up_vol <= 0:
+            volume_ok = True
+        else:
+            volume_ok = float(down_vol) < float(up_vol)
+    if not volume_ok:
+        return False
+    # ATR contraction (pandas-ta): require ATR at end of base < ATR at start when daily ATR is available
+    if df_daily is not None and "ATR" in df_daily.columns and start_ts is not None and end_ts is not None:
+        in_range = df_daily.loc[(df_daily.index >= start_ts) & (df_daily.index <= end_ts)]
+        if not in_range.empty and in_range["ATR"].notna().any():
+            atr_start = in_range["ATR"].iloc[0]
+            atr_end = in_range["ATR"].iloc[-1]
+            if pd.notna(atr_start) and pd.notna(atr_end) and atr_start > 0:
+                if float(atr_end) >= float(atr_start):
+                    return False
+    return True
 
 
 def _buy_point_date(
@@ -334,6 +352,15 @@ def find_bases(
         return results
     if len(df_daily) < MIN_DAILY_BARS:
         return results
+    # Add ATR (pandas-ta) for VCP volatility-contraction check
+    df_daily_atr = df_daily.copy()
+    atr_series = ta.atr(
+        high=df_daily_atr["High"],
+        low=df_daily_atr["Low"],
+        close=df_daily_atr["Close"],
+        length=14,
+    )
+    df_daily_atr["ATR"] = atr_series
     pivot_highs, pivot_lows = _pivot_highs_lows(df_weekly)
     if not pivot_highs:
         return results
@@ -412,7 +439,10 @@ def find_bases(
             distance_pct = 0.0
         else:
             distance_pct = (resistance - latest_close) / resistance * 100.0
-        vcp_like = _vcp_like(segment, lows_in_segment, prior_high, df_weekly)
+        vcp_like = _vcp_like(
+            segment, lows_in_segment, prior_high, df_weekly,
+            df_daily=df_daily_atr, start_ts=start_ts, end_ts=end_ts,
+        )
         results.append({
             "base_type": base_type,
             "start_date": start_ts,
