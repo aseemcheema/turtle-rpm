@@ -172,7 +172,7 @@ if symbol:
             # Current base first, then past bases by start date descending
             sorted_bases = sorted(
                 bases,
-                key=lambda b: (not b["is_current"], -pd.Timestamp(b["start_date"]).value()),
+                key=lambda b: (not b["is_current"], -pd.Timestamp(b["start_date"]).value),
             )
             table_df = pd.DataFrame([
                 {
