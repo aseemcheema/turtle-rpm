@@ -26,6 +26,13 @@ from turtle_rpm.leadership import (
     trend_template,
     rs_ratio_6m,
 )
+from turtle_rpm.liquidity import (
+    liquidity_metrics,
+    days_to_liquidate,
+    max_purchase_by_liquidity,
+    DEFAULT_MAX_DAYS_TO_EXIT,
+    DEFAULT_PCT_ADV_PER_DAY,
+)
 # from turtle_rpm.canslim import canslim_checklist, canslim_status
 
 MAX_SUGGESTIONS = 200
@@ -249,6 +256,58 @@ if symbol:
                 st.caption("Volume at pivot: Above average")
             else:
                 st.caption("Volume at pivot: —")
+
+        st.markdown("---")
+        # Row 3: Liquidity risk (metrics and purchase limit)
+        st.subheader("Liquidity risk")
+        st.caption(
+            "Metrics from average daily volume (ADV). Liquidity-based limit feeds into position sizing."
+        )
+        liq = liquidity_metrics(df_daily)
+        max_buy = max_purchase_by_liquidity(
+            df_daily,
+            max_days_to_exit=DEFAULT_MAX_DAYS_TO_EXIT,
+            pct_adv_per_day=DEFAULT_PCT_ADV_PER_DAY,
+        )
+        ref_shares = st.number_input(
+            "Reference position (shares) for days-to-liquidate",
+            min_value=1,
+            value=100,
+            step=50,
+            key="sepa_liquidity_ref_shares",
+        )
+        row3_col1, row3_col2 = st.columns(2)
+        with row3_col1:
+            if liq["adv_20"] is not None:
+                st.caption(f"ADV (20d): {liq['adv_20']:,.0f} shares")
+            else:
+                st.caption("ADV (20d): —")
+            if liq["adv_50"] is not None:
+                st.caption(f"ADV (50d): {liq['adv_50']:,.0f} shares")
+            else:
+                st.caption("ADV (50d): —")
+            if liq.get("dollar_adv_20") is not None:
+                st.caption(f"Dollar ADV (20d): ${liq['dollar_adv_20']:,.0f}")
+            if liq.get("dollar_adv_50") is not None:
+                st.caption(f"Dollar ADV (50d): ${liq['dollar_adv_50']:,.0f}")
+            adv_for_dtl = liq["adv_20"]
+            dtl = days_to_liquidate(float(ref_shares), adv_for_dtl)
+            if dtl is not None:
+                st.caption(f"Days to liquidate ({ref_shares} shares): {dtl:.2f} days")
+            else:
+                st.caption(f"Days to liquidate ({ref_shares} shares): —")
+        with row3_col2:
+            st.caption(
+                f"**Liquidity-based limit** (exit in {DEFAULT_MAX_DAYS_TO_EXIT} days at {DEFAULT_PCT_ADV_PER_DAY * 100:.0f}% ADV/day):"
+            )
+            if max_buy["max_shares"] is not None:
+                st.caption(f"Max shares: {max_buy['max_shares']:,.0f}")
+            else:
+                st.caption("Max shares: —")
+            if max_buy["max_dollar"] is not None:
+                st.caption(f"Max $: ${max_buy['max_dollar']:,.0f}")
+            else:
+                st.caption("Max $: —")
 
         # CAN SLIM checklist (temporarily commented out)
         # st.markdown("---")

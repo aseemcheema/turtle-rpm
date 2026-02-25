@@ -48,6 +48,16 @@ uv run python scripts/download_symbols.py
 
 This downloads the official NASDAQ Trader symbol file and writes `data/symbols.csv`. Without it, the SEPA symbol dropdown will be empty and the app will show instructions to run the script.
 
+## Liquidity risk (SEPA page)
+
+The Specific Entry Point Analysis page includes a **Liquidity risk** section that helps cap position size so you can exit without moving the market. It shows:
+
+- **ADV (20d and 50d)** — average daily trading volume in shares (and dollar volume).
+- **Days to liquidate** — for a reference position size (e.g. 100 shares), how many days of volume that represents (position ÷ ADV).
+- **Liquidity-based limit** — max shares and max dollar you can buy such that exiting at a set percentage of ADV per day (default 25%) keeps exit within a set number of days (default 5). This limit is intended to feed into position sizing: final position = min(size from other rules, this liquidity max).
+
+Defaults are 5 days to exit and 25% of ADV per day; the underlying logic lives in `turtle_rpm.liquidity` and can be tuned there or (in the future) via the UI.
+
 ## E\*TRADE portfolio integration
 - Open the **Portfolio** page and enter your E\*TRADE consumer key and secret (use Sandbox keys for testing).
 - Click **Get Request Token**, follow the authorization URL, and paste the verification code.
