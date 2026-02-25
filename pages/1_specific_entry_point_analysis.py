@@ -1,5 +1,5 @@
 """
-Specific Entry Point Analysis - Select a symbol (NYSE/NASDAQ) and view a price chart.
+Specific Entry Point Analysis - Select a symbol (NYSE/NASDAQ), view a price chart, and list SEPA bases.
 """
 
 import logging
@@ -12,6 +12,12 @@ from streamlit_searchbox import st_searchbox
 from streamlit_lightweight_charts import renderLightweightCharts
 
 from turtle_rpm.symbols import load_symbols_from_file
+from turtle_rpm.sepa import (
+    get_daily_ohlcv,
+    to_weekly,
+    compute_smas,
+    find_bases,
+)
 
 MAX_SUGGESTIONS = 200
 CHART_HEIGHT = 450
@@ -29,30 +35,19 @@ def _cached_symbol_list(path: str) -> list[dict[str, str]]:
 
 
 @st.cache_data(show_spinner=False)
-def _load_daily_ohlcv(symbol: str):
-    """Fetch daily OHLCV for a symbol; return (bar_data, volume_data) or ([], []) on error."""
-    try:
-        df = yf.download(symbol, period="2y", interval="1d", progress=False, auto_adjust=True)
-    except Exception as exc:
-        logger.exception("Failed to download daily data for %s", symbol)
-        return [], []
-    if df.empty or len(df) < 2:
-        return [], []
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = df.columns.get_level_values(0)
-    df = df.dropna().reset_index()
-    # Index column name after reset_index() varies (Date, Datetime, "", etc.); use first column.
-    date_col = df.columns[0]
-    df[date_col] = pd.to_datetime(df[date_col], errors="coerce")
-    df = df.dropna(subset=[date_col])
+def _get_daily_ohlcv_df(symbol: str, years: int = 5) -> pd.DataFrame:
+    """Fetch daily OHLCV as DataFrame for SEPA (chart + base detection). Cached by symbol and years."""
+    return get_daily_ohlcv(symbol, years=years)
+
+
+def _df_to_chart_data(df: pd.DataFrame):
+    """Convert daily OHLC DataFrame to (bar_data, volume_data) for lightweight-charts."""
     if df.empty:
         return [], []
-    if isinstance(df[date_col].dtype, pd.DatetimeTZDtype):
-        df[date_col] = df[date_col].dt.tz_localize(None)
     bars = []
     volumes = []
-    for _, row in df.iterrows():
-        t = row[date_col].strftime("%Y-%m-%d")
+    for ts, row in df.iterrows():
+        t = pd.Timestamp(ts).strftime("%Y-%m-%d")
         o, h, l, c = float(row["Open"]), float(row["High"]), float(row["Low"]), float(row["Close"])
         bars.append({"time": t, "open": o, "high": h, "low": l, "close": c})
         vol = float(row.get("Volume", 0))
@@ -97,63 +92,100 @@ else:
     )
     symbol = symbol or ""
 
-# Price chart: daily bars + volume (zoomable, pannable)
+# Price chart + SEPA base analysis
 if symbol:
-    with st.spinner(f"Loading daily chart for {symbol}..."):
-        bar_data, volume_data = _load_daily_ohlcv(symbol)
-    if bar_data and volume_data:
-        st.markdown("---")
-        st.subheader(f"Daily price & volume — {symbol}")
-        renderLightweightCharts(
-            [
-                {
-                    "chart": {
-                        "height": CHART_HEIGHT,
-                        "layout": {
-                            "background": {"type": "solid", "color": "#0e1117"},
-                            "textColor": "#d1d5db",
-                        },
-                        "rightPriceScale": {
-                            "scaleMargins": {"top": 0.1, "bottom": 0.35},
-                            "borderColor": "rgba(197, 203, 206, 0.4)",
-                        },
-                        "timeScale": {
-                            "borderColor": "rgba(197, 203, 206, 0.4)",
-                            "timeVisible": True,
-                            "secondsVisible": False,
-                        },
-                    },
-                    "series": [
-                        {
-                            "type": "Bar",
-                            "data": bar_data,
-                            "options": {
-                                "upColor": "#26a69a",
-                                "downColor": "#ef5350",
-                                "borderUpColor": "#26a69a",
-                                "borderDownColor": "#ef5350",
-                                "wickUpColor": "#26a69a",
-                                "wickDownColor": "#ef5350",
-                            },
-                        },
-                        {
-                            "type": "Histogram",
-                            "data": volume_data,
-                            "options": {
-                                "priceFormat": {"type": "volume"},
-                                "priceScaleId": "",
-                            },
-                            "priceScale": {
-                                "scaleMargins": {"top": 0.7, "bottom": 0},
-                            },
-                        },
-                    ],
-                }
-            ],
-            key=f"sepa_chart_{symbol}",
-        )
-        st.caption("Drag to pan, scroll to zoom. Volume bars: green = up day, red = down day.")
-    else:
+    with st.spinner(f"Loading data for {symbol}..."):
+        df_daily = _get_daily_ohlcv_df(symbol, years=5)
+    if df_daily.empty or len(df_daily) < 2:
         st.warning(f"No daily data available for {symbol}.")
+    else:
+        # Chart: last ~2 years for responsiveness (temporarily commented out)
+        # chart_df = df_daily.tail(252 * 2)
+        # bar_data, volume_data = _df_to_chart_data(chart_df)
+        # if bar_data and volume_data:
+        #     st.markdown("---")
+        #     st.subheader(f"Daily price & volume — {symbol}")
+        #     renderLightweightCharts(
+        #         [
+        #         {
+        #             "chart": {
+        #                 "height": CHART_HEIGHT,
+        #                 "layout": {
+        #                     "background": {"type": "solid", "color": "#0e1117"},
+        #                     "textColor": "#d1d5db",
+        #                 },
+        #                 "rightPriceScale": {
+        #                     "scaleMargins": {"top": 0.1, "bottom": 0.35},
+        #                     "borderColor": "rgba(197, 203, 206, 0.4)",
+        #                 },
+        #                 "timeScale": {
+        #                     "borderColor": "rgba(197, 203, 206, 0.4)",
+        #                     "timeVisible": True,
+        #                     "secondsVisible": False,
+        #                 },
+        #             },
+        #             "series": [
+        #                 {
+        #                     "type": "Bar",
+        #                     "data": bar_data,
+        #                     "options": {
+        #                         "upColor": "#26a69a",
+        #                         "downColor": "#ef5350",
+        #                         "borderUpColor": "#26a69a",
+        #                         "borderDownColor": "#ef5350",
+        #                         "wickUpColor": "#26a69a",
+        #                         "wickDownColor": "#ef5350",
+        #                     },
+        #                 },
+        #                 {
+        #                     "type": "Histogram",
+        #                     "data": volume_data,
+        #                     "options": {
+        #                         "priceFormat": {"type": "volume"},
+        #                         "priceScaleId": "",
+        #                     },
+        #                     "priceScale": {
+        #                         "scaleMargins": {"top": 0.7, "bottom": 0},
+        #                     },
+        #                 },
+        #             ],
+        #         }
+        #         ],
+        #         key=f"sepa_chart_{symbol}",
+        #     )
+        #     st.caption("Drag to pan, scroll to zoom. Volume bars: green = up day, red = down day.")
+        # else:
+        #     st.warning("Chart data unavailable.")
+        # SEPA base detection (full 5y history)
+        daily_smas = compute_smas(df_daily)
+        weekly = to_weekly(df_daily)
+        bases = find_bases(weekly, daily_smas)
+        st.markdown("---")
+        st.subheader("SEPA bases")
+        if not bases:
+            st.info("No bases meeting SEPA criteria (uptrend + base type and duration).")
+        else:
+            def _fmt_date(d):
+                if d is None:
+                    return "Not yet"
+                return d.strftime("%Y-%m-%d") if hasattr(d, "strftime") else str(d)
+            # Current base first, then past bases by start date descending
+            sorted_bases = sorted(
+                bases,
+                key=lambda b: (not b["is_current"], -pd.Timestamp(b["start_date"]).value()),
+            )
+            table_df = pd.DataFrame([
+                {
+                    "Current?": "Yes" if b["is_current"] else "No",
+                    "Base type": b["base_type"],
+                    "Start date": _fmt_date(b["start_date"]),
+                    "Depth (%)": b["depth_pct"],
+                    "Duration (weeks)": b["duration_weeks"],
+                    "Buy point date": _fmt_date(b.get("buy_point_date")),
+                    "Buy point price": b.get("resistance", ""),
+                }
+                for b in sorted_bases
+            ])
+            st.dataframe(table_df, use_container_width=True)
 else:
     st.info("Select a symbol above to load the daily price and volume chart.")
