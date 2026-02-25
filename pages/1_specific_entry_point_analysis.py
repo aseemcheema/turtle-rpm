@@ -18,6 +18,12 @@ from turtle_rpm.sepa import (
     compute_smas,
     find_bases,
 )
+from turtle_rpm.leadership import (
+    add_52w_high_low,
+    trend_template,
+    rs_ratio_6m,
+)
+from turtle_rpm.canslim import canslim_checklist, canslim_status
 
 MAX_SUGGESTIONS = 200
 CHART_HEIGHT = 450
@@ -38,6 +44,12 @@ def _cached_symbol_list(path: str) -> list[dict[str, str]]:
 def _get_daily_ohlcv_df(symbol: str, years: int = 5) -> pd.DataFrame:
     """Fetch daily OHLCV as DataFrame for SEPA (chart + base detection). Cached by symbol and years."""
     return get_daily_ohlcv(symbol, years=years)
+
+
+@st.cache_data(show_spinner=False)
+def _get_rs_ratio(symbol: str, benchmark: str = "SPY") -> float | None:
+    """RS ratio vs benchmark (6m). Cached."""
+    return rs_ratio_6m(symbol, benchmark)
 
 
 def _df_to_chart_data(df: pd.DataFrame):
@@ -169,11 +181,16 @@ if symbol:
                 if d is None:
                     return "Not yet"
                 return d.strftime("%Y-%m-%d") if hasattr(d, "strftime") else str(d)
-            # Current base first, then past bases by start date descending
+            # Current base first, then by distance to buy ascending (closest first)
             sorted_bases = sorted(
                 bases,
-                key=lambda b: (not b["is_current"], -pd.Timestamp(b["start_date"]).value),
+                key=lambda b: (not b["is_current"], b.get("distance_pct") or 0),
             )
+            def _fmt_distance(b):
+                if b.get("buy_point_date") is not None:
+                    return "At/above"
+                d = b.get("distance_pct")
+                return f"{d}%" if d is not None else "—"
             table_df = pd.DataFrame([
                 {
                     "Current?": "Yes" if b["is_current"] else "No",
@@ -181,11 +198,36 @@ if symbol:
                     "Start date": _fmt_date(b["start_date"]),
                     "Depth (%)": b["depth_pct"],
                     "Duration (weeks)": b["duration_weeks"],
+                    "Distance to buy (%)": _fmt_distance(b),
                     "Buy point date": _fmt_date(b.get("buy_point_date")),
                     "Buy point price": b.get("resistance", ""),
                 }
                 for b in sorted_bases
             ])
             st.dataframe(table_df, width="stretch")
+        # Leadership profile (Minervini): 52w + Trend Template + RS
+        daily_with_52w = add_52w_high_low(daily_smas)
+        rs_ratio = _get_rs_ratio(symbol)
+        tt = trend_template(daily_with_52w, rs_ratio=rs_ratio)
+        st.markdown("---")
+        st.subheader("Leadership profile (Minervini)")
+        st.metric("Trend Template", f"{tt['score']}/8", help="8 criteria: price vs SMAs, 52w range, RS")
+        for d in tt["details"]:
+            status = "Pass" if d["pass"] else "Fail"
+            st.caption(f"{status}: {d['name']}" + (f" — {d['detail']}" if d.get("detail") else ""))
+        if rs_ratio is not None:
+            st.caption(f"RS vs SPY (6m): {rs_ratio:.2f} — {'Outperforming' if rs_ratio >= 1 else 'Underperforming'}")
+        current_base = next((b for b in bases if b.get("is_current")), None)
+        if current_base is not None:
+            st.caption(f"VCP-like (current base): {'Yes' if current_base.get('vcp_like') else 'No'}")
+        # CAN SLIM checklist
+        st.markdown("---")
+        st.subheader("CAN SLIM checklist")
+        can_items = canslim_checklist(symbol, daily_smas, rs_ratio)
+        can_df = pd.DataFrame([
+            {"Letter": it["letter"], "Criterion": it["name"], "Status": canslim_status(it["pass"]), "Detail": it["detail"]}
+            for it in can_items
+        ])
+        st.dataframe(can_df, width="stretch")
 else:
     st.info("Select a symbol above to load the daily price and volume chart.")

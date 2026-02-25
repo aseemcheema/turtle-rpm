@@ -261,6 +261,43 @@ def _resistance_for_base(
     return prior_high
 
 
+def _vcp_like(
+    segment: pd.DataFrame,
+    lows_in_segment: list[int],
+    prior_high: float,
+    df_weekly: pd.DataFrame,
+) -> bool:
+    """
+    VCP-style: (1) Last two pullbacks have decreasing depth; (2) volume dries up on pullbacks.
+    Returns True if both conditions hold (simplified check).
+    """
+    if prior_high <= 0:
+        return False
+    # Decreasing pullback depths: depth from prior_high to each pivot low, in order; each should be <= previous
+    depths: list[float] = []
+    for i in lows_in_segment:
+        low = float(df_weekly["Low"].iloc[i])
+        d = (prior_high - low) / prior_high * 100.0
+        depths.append(d)
+    decreasing = True
+    for k in range(1, len(depths)):
+        if depths[k] >= depths[k - 1]:
+            decreasing = False
+            break
+    if not decreasing or len(depths) < 2:
+        return False
+    # Volume dry-up: avg volume on down weeks < avg volume on up weeks
+    if "Volume" not in segment.columns:
+        return decreasing
+    up_weeks = segment["Close"] >= segment["Open"]
+    down_vol = segment.loc[~up_weeks, "Volume"].mean()
+    up_vol = segment.loc[up_weeks, "Volume"].mean()
+    if pd.isna(down_vol) or pd.isna(up_vol) or up_vol <= 0:
+        return decreasing
+    volume_dry_up = float(down_vol) < float(up_vol)
+    return decreasing and volume_dry_up
+
+
 def _buy_point_date(
     df_weekly: pd.DataFrame,
     start_idx: int,
@@ -370,6 +407,12 @@ def find_bases(
             has_handle=has_handle,
         )
         buy_point_date = _buy_point_date(df_weekly, hi_idx, end_idx, resistance)
+        # Distance to buy point: % below resistance; 0 if already at/above
+        if buy_point_date is not None or resistance <= 0:
+            distance_pct = 0.0
+        else:
+            distance_pct = (resistance - latest_close) / resistance * 100.0
+        vcp_like = _vcp_like(segment, lows_in_segment, prior_high, df_weekly)
         results.append({
             "base_type": base_type,
             "start_date": start_ts,
@@ -380,6 +423,8 @@ def find_bases(
             "base_low": base_low,
             "resistance": round(resistance, 2),
             "buy_point_date": buy_point_date,
+            "distance_pct": round(distance_pct, 2),
+            "vcp_like": vcp_like,
         })
 
     # Deduplicate by start_date (keep first/base type by priority already in _classify_base)
