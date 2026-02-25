@@ -40,6 +40,72 @@ DOUBLE_BOTTOM_LOW_TOLERANCE = 0.05
 # Darvas: max depth as fraction of high to count as "tight" (e.g. 0.25 = 25%)
 DARVAS_MAX_DEPTH_PCT = 25.0
 
+# Pivot formation (tight consolidation near current price)
+PIVOT_FORMING_MIN_DAYS = 3
+PIVOT_FORMING_MAX_DAYS = 10
+PIVOT_FORMING_MAX_RANGE_PCT = 8.0
+PIVOT_TIGHT_CLOSES_DAYS = 3
+PIVOT_TIGHT_CLOSES_MAX_PCT = 3.0
+
+
+def pivot_forming(
+    df_daily: pd.DataFrame,
+    min_days: int = PIVOT_FORMING_MIN_DAYS,
+    max_days: int = PIVOT_FORMING_MAX_DAYS,
+    max_range_pct: float = PIVOT_FORMING_MAX_RANGE_PCT,
+    tight_closes_days: int = PIVOT_TIGHT_CLOSES_DAYS,
+    tight_closes_pct: float | None = PIVOT_TIGHT_CLOSES_MAX_PCT,
+) -> dict[str, Any]:
+    """
+    Detect if a pivot (tight consolidation) is forming in the most recent bars.
+
+    A pivot is 3–10 days of tight price action: high-to-low range < max_range_pct.
+    Optional: last tight_closes_days have closes in a tight range (stronger signal).
+
+    Returns dict: forming (bool), days (int | None), range_pct (float | None), tight_closes (bool).
+    """
+    empty_result: dict[str, Any] = {
+        "forming": False,
+        "days": None,
+        "range_pct": None,
+        "tight_closes": False,
+    }
+    if df_daily.empty or len(df_daily) < min_days:
+        return empty_result
+    for col in ("High", "Low", "Close"):
+        if col not in df_daily.columns:
+            return empty_result
+    tail = df_daily.tail(max_days)
+    if len(tail) < min_days:
+        return empty_result
+    # Prefer longest qualifying window: try L from max_days down to min_days
+    for L in range(min(len(tail), max_days), min_days - 1, -1):
+        window = tail.tail(L)
+        w_high = float(window["High"].max())
+        w_low = float(window["Low"].min())
+        if w_high <= 0:
+            continue
+        range_pct = (w_high - w_low) / w_high * 100.0
+        if range_pct >= max_range_pct:
+            continue
+        tight_closes = False
+        if tight_closes_pct is not None and L >= tight_closes_days:
+            last_n = window.tail(tight_closes_days)
+            closes = last_n["Close"]
+            c_max = float(closes.max())
+            c_min = float(closes.min())
+            midpoint = (c_max + c_min) / 2.0
+            if midpoint > 0:
+                tight_pct = (c_max - c_min) / midpoint * 100.0
+                tight_closes = tight_pct <= tight_closes_pct
+        return {
+            "forming": True,
+            "days": L,
+            "range_pct": round(range_pct, 2),
+            "tight_closes": tight_closes,
+        }
+    return empty_result
+
 
 def get_daily_ohlcv(symbol: str, years: int = 5) -> pd.DataFrame:
     """

@@ -17,6 +17,7 @@ from turtle_rpm.sepa import (
     to_weekly,
     compute_smas,
     find_bases,
+    pivot_forming,
 )
 from turtle_rpm.leadership import (
     add_52w_high_low,
@@ -205,6 +206,15 @@ if symbol:
                 for b in sorted_bases
             ])
             st.dataframe(table_df, width="stretch")
+        # Pivot forming (tight 3–10 day consolidation); show whenever we have daily data
+        pivot = pivot_forming(df_daily)
+        if pivot["forming"]:
+            detail = f"{pivot['days']} days, {pivot['range_pct']}% range"
+            if pivot.get("tight_closes"):
+                detail += ", tight closes"
+            st.caption(f"Pivot forming: Yes ({detail})")
+        else:
+            st.caption("Pivot forming: No")
         # Leadership profile (Minervini): 52w + Trend Template + RS
         daily_with_52w = add_52w_high_low(daily_smas)
         rs_ratio = _get_rs_ratio(symbol)
