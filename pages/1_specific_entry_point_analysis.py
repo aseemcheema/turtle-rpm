@@ -186,6 +186,6 @@ if symbol:
                 }
                 for b in sorted_bases
             ])
-            st.dataframe(table_df, use_container_width=True)
+            st.dataframe(table_df, width="stretch")
 else:
     st.info("Select a symbol above to load the daily price and volume chart.")
