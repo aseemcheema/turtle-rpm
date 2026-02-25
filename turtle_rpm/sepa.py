@@ -67,7 +67,7 @@ def pivot_forming(
     Optional: last tight_closes_days have closes in a tight range (stronger signal).
 
     Returns dict: forming (bool), days (int | None), range_pct (float | None), tight_closes (bool),
-    pivot_start_date (Timestamp | None), pivot_end_date (Timestamp | None) when forming.
+    pivot_start_date (Timestamp | None), pivot_end_date (Timestamp | None), pivot_high (float | None) when forming.
     """
     empty_result: dict[str, Any] = {
         "forming": False,
@@ -76,6 +76,7 @@ def pivot_forming(
         "tight_closes": False,
         "pivot_start_date": None,
         "pivot_end_date": None,
+        "pivot_high": None,
     }
     if df_daily.empty or len(df_daily) < min_days:
         return empty_result
@@ -114,6 +115,7 @@ def pivot_forming(
             "tight_closes": tight_closes,
             "pivot_start_date": pivot_start,
             "pivot_end_date": pivot_end,
+            "pivot_high": round(w_high, 2),
         }
     return empty_result
 

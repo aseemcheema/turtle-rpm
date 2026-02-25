@@ -185,6 +185,8 @@ if symbol:
             if pivot.get("tight_closes"):
                 detail += ", tight closes"
             st.caption(f"Pivot forming: Yes ({detail})")
+            if pivot.get("pivot_high") is not None:
+                st.caption(f"Pivot high: {pivot['pivot_high']}")
             base_containing = pivot_in_base(pivot, bases)
             if base_containing is not None:
                 label = f"In base: Yes — {base_containing['base_type']}"
