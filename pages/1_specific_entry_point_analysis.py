@@ -176,88 +176,79 @@ if symbol:
         weekly = to_weekly(df_daily)
         pivot = pivot_forming(df_daily)
         bases = find_bases(weekly, daily_smas, pivot=pivot)
+        current_base = next((b for b in bases if b.get("is_current")), None)
 
-        # --- Pivot first ---
+        def _fmt_date(d):
+            if d is None:
+                return "Not yet"
+            return d.strftime("%Y-%m-%d") if hasattr(d, "strftime") else str(d)
+
+        def _fmt_distance(b):
+            if b.get("buy_point_date") is not None:
+                return "At/above"
+            d = b.get("distance_pct")
+            return f"{d}%" if d is not None else "—"
+
         st.markdown("---")
-        st.subheader("Pivot")
-        if pivot["forming"]:
-            detail = f"{pivot['days']} days, {pivot['range_pct']}% range"
-            if pivot.get("tight_closes"):
-                detail += ", tight closes"
-            st.caption(f"Pivot forming: Yes ({detail})")
-            if pivot.get("pivot_high") is not None:
-                st.caption(f"Pivot high: {pivot['pivot_high']}")
-            base_containing = pivot_in_base(pivot, bases)
-            if base_containing is not None:
-                label = f"In base: Yes — {base_containing['base_type']}"
-                if base_containing.get("is_current"):
-                    label += " (current base)"
-                st.caption(label)
+        # Row 1: Base details (left) | Pivot details (right)
+        row1_col1, row1_col2 = st.columns(2)
+        with row1_col1:
+            st.subheader("Current base")
+            if current_base is None:
+                st.caption("No current base meeting SEPA criteria.")
             else:
-                st.caption("In base: No")
-        else:
-            st.caption("Pivot forming: No")
+                b = current_base
+                st.caption(f"**Base type:** {b['base_type']}")
+                st.caption(f"Start: {_fmt_date(b['start_date'])} — End: {_fmt_date(b['end_date'])}")
+                st.caption(f"Depth: {b['depth_pct']}% — Duration: {b['duration_weeks']} weeks")
+                st.caption(f"Resistance (buy point): {b.get('resistance', '—')}")
+                st.caption(f"Distance to buy: {_fmt_distance(b)}")
+                st.caption(f"Buy point date: {_fmt_date(b.get('buy_point_date'))}")
+        with row1_col2:
+            st.subheader("Pivot")
+            if pivot["forming"]:
+                detail = f"{pivot['days']} days, {pivot['range_pct']}% range"
+                if pivot.get("tight_closes"):
+                    detail += ", tight closes"
+                st.caption(f"Pivot forming: Yes ({detail})")
+                if pivot.get("pivot_high") is not None:
+                    st.caption(f"Pivot high: {pivot['pivot_high']}")
+                base_containing = pivot_in_base(pivot, bases)
+                if base_containing is not None:
+                    label = f"In base: Yes — {base_containing['base_type']}"
+                    if base_containing.get("is_current"):
+                        label += " (current base)"
+                    st.caption(label)
+                else:
+                    st.caption("In base: No")
+            else:
+                st.caption("Pivot forming: No")
 
-        # --- SEPA bases table ---
         st.markdown("---")
-        st.subheader("SEPA bases")
-        if not bases:
-            st.info("No bases meeting SEPA criteria (uptrend + base type and duration).")
-        else:
-            def _fmt_date(d):
-                if d is None:
-                    return "Not yet"
-                return d.strftime("%Y-%m-%d") if hasattr(d, "strftime") else str(d)
-            sorted_bases = sorted(
-                bases,
-                key=lambda b: (not b["is_current"], b.get("distance_pct") or 0),
-            )
-            def _fmt_distance(b):
-                if b.get("buy_point_date") is not None:
-                    return "At/above"
-                d = b.get("distance_pct")
-                return f"{d}%" if d is not None else "—"
-            table_df = pd.DataFrame([
-                {
-                    "Current?": "Yes" if b["is_current"] else "No",
-                    "Base type": b["base_type"],
-                    "Start date": _fmt_date(b["start_date"]),
-                    "Depth (%)": b["depth_pct"],
-                    "Duration (weeks)": b["duration_weeks"],
-                    "Distance to buy (%)": _fmt_distance(b),
-                    "Buy point date": _fmt_date(b.get("buy_point_date")),
-                    "Buy point price": b.get("resistance", ""),
-                }
-                for b in sorted_bases
-            ])
-            st.dataframe(table_df, width="stretch")
-
-        # --- Leadership profile (Minervini) ---
+        # Row 2: Leadership profile (left) | VCP characteristics (right)
         daily_with_52w = add_52w_high_low(daily_smas)
         rs_ratio = _get_rs_ratio(symbol)
         tt = trend_template(daily_with_52w, rs_ratio=rs_ratio)
-        st.markdown("---")
-        st.subheader("Leadership profile (Minervini)")
-        st.metric("Trend Template", f"{tt['score']}/8", help="8 criteria: price vs SMAs, 52w range, RS")
-        for d in tt["details"]:
-            status = "Pass" if d["pass"] else "Fail"
-            st.caption(f"{status}: {d['name']}" + (f" — {d['detail']}" if d.get("detail") else ""))
-        if rs_ratio is not None:
-            st.caption(f"RS vs SPY (6m): {rs_ratio:.2f} — {'Outperforming' if rs_ratio >= 1 else 'Underperforming'}")
-
-        # --- VCP characteristics ---
-        st.markdown("---")
-        st.subheader("VCP characteristics")
-        current_base = next((b for b in bases if b.get("is_current")), None)
-        if current_base is not None:
-            st.caption(f"Current base VCP-like: {'Yes' if current_base.get('vcp_like') else 'No'}")
-        vol_label = pivot_volume_vs_average(df_daily, pivot)
-        if vol_label == "below":
-            st.caption("Volume at pivot: Below average")
-        elif vol_label == "above":
-            st.caption("Volume at pivot: Above average")
-        else:
-            st.caption("Volume at pivot: —")
+        row2_col1, row2_col2 = st.columns(2)
+        with row2_col1:
+            st.subheader("Leadership profile (Minervini)")
+            st.metric("Trend Template", f"{tt['score']}/8", help="8 criteria: price vs SMAs, 52w range, RS")
+            for d in tt["details"]:
+                status = "Pass" if d["pass"] else "Fail"
+                st.caption(f"{status}: {d['name']}" + (f" — {d['detail']}" if d.get("detail") else ""))
+            if rs_ratio is not None:
+                st.caption(f"RS vs SPY (6m): {rs_ratio:.2f} — {'Outperforming' if rs_ratio >= 1 else 'Underperforming'}")
+        with row2_col2:
+            st.subheader("VCP characteristics")
+            if current_base is not None:
+                st.caption(f"Current base VCP-like: {'Yes' if current_base.get('vcp_like') else 'No'}")
+            vol_label = pivot_volume_vs_average(df_daily, pivot)
+            if vol_label == "below":
+                st.caption("Volume at pivot: Below average")
+            elif vol_label == "above":
+                st.caption("Volume at pivot: Above average")
+            else:
+                st.caption("Volume at pivot: —")
 
         # CAN SLIM checklist (temporarily commented out)
         # st.markdown("---")
