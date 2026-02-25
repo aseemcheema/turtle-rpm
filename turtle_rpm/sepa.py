@@ -62,13 +62,16 @@ def pivot_forming(
     A pivot is 3–10 days of tight price action: high-to-low range < max_range_pct.
     Optional: last tight_closes_days have closes in a tight range (stronger signal).
 
-    Returns dict: forming (bool), days (int | None), range_pct (float | None), tight_closes (bool).
+    Returns dict: forming (bool), days (int | None), range_pct (float | None), tight_closes (bool),
+    pivot_start_date (Timestamp | None), pivot_end_date (Timestamp | None) when forming.
     """
     empty_result: dict[str, Any] = {
         "forming": False,
         "days": None,
         "range_pct": None,
         "tight_closes": False,
+        "pivot_start_date": None,
+        "pivot_end_date": None,
     }
     if df_daily.empty or len(df_daily) < min_days:
         return empty_result
@@ -98,13 +101,82 @@ def pivot_forming(
             if midpoint > 0:
                 tight_pct = (c_max - c_min) / midpoint * 100.0
                 tight_closes = tight_pct <= tight_closes_pct
+        pivot_start = pd.Timestamp(window.index[0])
+        pivot_end = pd.Timestamp(window.index[-1])
         return {
             "forming": True,
             "days": L,
             "range_pct": round(range_pct, 2),
             "tight_closes": tight_closes,
+            "pivot_start_date": pivot_start,
+            "pivot_end_date": pivot_end,
         }
     return empty_result
+
+
+# Lookback for average volume comparison at pivot (days)
+PIVOT_VOLUME_LOOKBACK_DAYS = 50
+
+
+def pivot_in_base(pivot: dict[str, Any], bases: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """
+    Return the base that contains the pivot window, or None.
+
+    Pivot is "in" a base if the pivot window overlaps the base interval.
+    If multiple bases overlap, prefer the one that contains pivot_end_date (typically the current base).
+    """
+    if not pivot.get("forming") or not bases:
+        return None
+    start_ts = pivot.get("pivot_start_date")
+    end_ts = pivot.get("pivot_end_date")
+    if start_ts is None or end_ts is None:
+        return None
+    start_ts = pd.Timestamp(start_ts)
+    end_ts = pd.Timestamp(end_ts)
+    containing = []
+    for b in bases:
+        b_start = pd.Timestamp(b["start_date"]) if b.get("start_date") is not None else None
+        b_end = pd.Timestamp(b["end_date"]) if b.get("end_date") is not None else None
+        if b_start is None or b_end is None:
+            continue
+        if start_ts <= b_end and end_ts >= b_start:
+            containing.append(b)
+    if not containing:
+        return None
+    # Prefer base that contains pivot end (current price)
+    for b in containing:
+        b_start = pd.Timestamp(b["start_date"])
+        b_end = pd.Timestamp(b["end_date"])
+        if b_start <= end_ts <= b_end:
+            return b
+    return containing[0]
+
+
+def pivot_volume_vs_average(
+    df_daily: pd.DataFrame,
+    pivot: dict[str, Any],
+    lookback_days: int = PIVOT_VOLUME_LOOKBACK_DAYS,
+) -> str | None:
+    """
+    Compare mean volume over the pivot window to average volume over lookback.
+    Returns "below", "above", or None if pivot not forming or no volume data.
+    """
+    if not pivot.get("forming") or df_daily.empty or "Volume" not in df_daily.columns:
+        return None
+    L = pivot.get("days")
+    if L is None or L < 1:
+        return None
+    tail = df_daily.tail(max(lookback_days, L))
+    if len(tail) < L:
+        return None
+    pivot_window = tail.tail(L)
+    avg_lookback = tail["Volume"].mean()
+    pivot_avg = pivot_window["Volume"].mean()
+    if pd.isna(avg_lookback) or avg_lookback <= 0:
+        return None
+    if pd.isna(pivot_avg):
+        return None
+    return "below" if pivot_avg < avg_lookback else "above"
 
 
 def get_daily_ohlcv(symbol: str, years: int = 5) -> pd.DataFrame:

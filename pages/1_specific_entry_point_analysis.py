@@ -18,13 +18,15 @@ from turtle_rpm.sepa import (
     compute_smas,
     find_bases,
     pivot_forming,
+    pivot_in_base,
+    pivot_volume_vs_average,
 )
 from turtle_rpm.leadership import (
     add_52w_high_low,
     trend_template,
     rs_ratio_6m,
 )
-from turtle_rpm.canslim import canslim_checklist, canslim_status
+# from turtle_rpm.canslim import canslim_checklist, canslim_status
 
 MAX_SUGGESTIONS = 200
 CHART_HEIGHT = 450
@@ -169,10 +171,32 @@ if symbol:
         #     st.caption("Drag to pan, scroll to zoom. Volume bars: green = up day, red = down day.")
         # else:
         #     st.warning("Chart data unavailable.")
-        # SEPA base detection (full 5y history)
+        # Data and base detection (full 5y history)
         daily_smas = compute_smas(df_daily)
         weekly = to_weekly(df_daily)
         bases = find_bases(weekly, daily_smas)
+
+        # --- Pivot first ---
+        st.markdown("---")
+        st.subheader("Pivot")
+        pivot = pivot_forming(df_daily)
+        if pivot["forming"]:
+            detail = f"{pivot['days']} days, {pivot['range_pct']}% range"
+            if pivot.get("tight_closes"):
+                detail += ", tight closes"
+            st.caption(f"Pivot forming: Yes ({detail})")
+            base_containing = pivot_in_base(pivot, bases)
+            if base_containing is not None:
+                label = f"In base: Yes — {base_containing['base_type']}"
+                if base_containing.get("is_current"):
+                    label += " (current base)"
+                st.caption(label)
+            else:
+                st.caption("In base: No")
+        else:
+            st.caption("Pivot forming: No")
+
+        # --- SEPA bases table ---
         st.markdown("---")
         st.subheader("SEPA bases")
         if not bases:
@@ -182,7 +206,6 @@ if symbol:
                 if d is None:
                     return "Not yet"
                 return d.strftime("%Y-%m-%d") if hasattr(d, "strftime") else str(d)
-            # Current base first, then by distance to buy ascending (closest first)
             sorted_bases = sorted(
                 bases,
                 key=lambda b: (not b["is_current"], b.get("distance_pct") or 0),
@@ -206,16 +229,8 @@ if symbol:
                 for b in sorted_bases
             ])
             st.dataframe(table_df, width="stretch")
-        # Pivot forming (tight 3–10 day consolidation); show whenever we have daily data
-        pivot = pivot_forming(df_daily)
-        if pivot["forming"]:
-            detail = f"{pivot['days']} days, {pivot['range_pct']}% range"
-            if pivot.get("tight_closes"):
-                detail += ", tight closes"
-            st.caption(f"Pivot forming: Yes ({detail})")
-        else:
-            st.caption("Pivot forming: No")
-        # Leadership profile (Minervini): 52w + Trend Template + RS
+
+        # --- Leadership profile (Minervini) ---
         daily_with_52w = add_52w_high_low(daily_smas)
         rs_ratio = _get_rs_ratio(symbol)
         tt = trend_template(daily_with_52w, rs_ratio=rs_ratio)
@@ -227,17 +242,29 @@ if symbol:
             st.caption(f"{status}: {d['name']}" + (f" — {d['detail']}" if d.get("detail") else ""))
         if rs_ratio is not None:
             st.caption(f"RS vs SPY (6m): {rs_ratio:.2f} — {'Outperforming' if rs_ratio >= 1 else 'Underperforming'}")
+
+        # --- VCP characteristics ---
+        st.markdown("---")
+        st.subheader("VCP characteristics")
         current_base = next((b for b in bases if b.get("is_current")), None)
         if current_base is not None:
-            st.caption(f"VCP-like (current base): {'Yes' if current_base.get('vcp_like') else 'No'}")
-        # CAN SLIM checklist
-        st.markdown("---")
-        st.subheader("CAN SLIM checklist")
-        can_items = canslim_checklist(symbol, daily_smas, rs_ratio)
-        can_df = pd.DataFrame([
-            {"Letter": it["letter"], "Criterion": it["name"], "Status": canslim_status(it["pass"]), "Detail": it["detail"]}
-            for it in can_items
-        ])
-        st.dataframe(can_df, width="stretch")
+            st.caption(f"Current base VCP-like: {'Yes' if current_base.get('vcp_like') else 'No'}")
+        vol_label = pivot_volume_vs_average(df_daily, pivot)
+        if vol_label == "below":
+            st.caption("Volume at pivot: Below average")
+        elif vol_label == "above":
+            st.caption("Volume at pivot: Above average")
+        else:
+            st.caption("Volume at pivot: —")
+
+        # CAN SLIM checklist (temporarily commented out)
+        # st.markdown("---")
+        # st.subheader("CAN SLIM checklist")
+        # can_items = canslim_checklist(symbol, daily_smas, rs_ratio)
+        # can_df = pd.DataFrame([
+        #     {"Letter": it["letter"], "Criterion": it["name"], "Status": canslim_status(it["pass"]), "Detail": it["detail"]}
+        #     for it in can_items
+        # ])
+        # st.dataframe(can_df, width="stretch")
 else:
     st.info("Select a symbol above to load the daily price and volume chart.")
