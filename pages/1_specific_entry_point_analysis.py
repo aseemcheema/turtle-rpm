@@ -174,12 +174,12 @@ if symbol:
         # Data and base detection (full 5y history)
         daily_smas = compute_smas(df_daily)
         weekly = to_weekly(df_daily)
-        bases = find_bases(weekly, daily_smas)
+        pivot = pivot_forming(df_daily)
+        bases = find_bases(weekly, daily_smas, pivot=pivot)
 
         # --- Pivot first ---
         st.markdown("---")
         st.subheader("Pivot")
-        pivot = pivot_forming(df_daily)
         if pivot["forming"]:
             detail = f"{pivot['days']} days, {pivot['range_pct']}% range"
             if pivot.get("tight_closes"):

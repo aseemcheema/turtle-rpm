@@ -39,6 +39,10 @@ POWER_PLAY_MIN_RUNUP = 0.90
 DOUBLE_BOTTOM_LOW_TOLERANCE = 0.05
 # Darvas: max depth as fraction of high to count as "tight" (e.g. 0.25 = 25%)
 DARVAS_MAX_DEPTH_PCT = 25.0
+# Trailing-high candidate: look back this many weeks for "highest high" when building current base
+TRAILING_HIGH_LOOKBACK_WEEKS = 12
+# Cup/Low cheat: minimum weeks when base is "current" (forming); completed bases still use 6
+CUP_CHEAT_MIN_WEEKS_CURRENT = 5
 
 # Pivot formation (tight consolidation near current price)
 PIVOT_FORMING_MIN_DAYS = 3
@@ -325,14 +329,18 @@ def _classify_base(
     low2: float | None,
     has_handle: bool,
     prior_8wk_gain: float | None,
+    is_current_base: bool = False,
 ) -> str | None:
     """
     Classify a candidate base into one of six types by duration and shape.
     Returns type name or None if no type matches. Priority: Power Play > Darvas > Cup completion > Low cheat > Cup w/ handle > Double bottom.
+    When is_current_base is True, Cup/Low cheat are allowed for duration >= 5 weeks (forming base).
     """
     cup_range = prior_high - base_low
     lower_third_bound = base_low + cup_range / 3.0 if cup_range > 0 else base_low
     in_lower_third = latest_close <= lower_third_bound
+    # Cup/Low cheat min weeks: 5 for current (forming) base, else 6
+    cup_min_weeks = CUP_CHEAT_MIN_WEEKS_CURRENT if is_current_base else CUP_CHEAT_WEEKS[0]
 
     # Power Play: 2-6 weeks, prior 8-week gain >= 90%
     if POWER_PLAY_WEEKS[0] <= duration_weeks <= POWER_PLAY_WEEKS[1]:
@@ -344,8 +352,8 @@ def _classify_base(
         if depth_pct <= DARVAS_MAX_DEPTH_PCT:
             return "Darvas box"
 
-    # Cup completion / Low cheat: 6-52 weeks, single broad low, no handle
-    if CUP_CHEAT_WEEKS[0] <= duration_weeks <= CUP_CHEAT_WEEKS[1] and not has_handle:
+    # Cup completion / Low cheat: cup_min_weeks to 52 weeks, single broad low, no handle
+    if cup_min_weeks <= duration_weeks <= CUP_CHEAT_WEEKS[1] and not has_handle:
         if in_lower_third:
             return "Low cheat"
         return "Cup completion cheat"
@@ -361,8 +369,8 @@ def _classify_base(
             if pct_diff <= DOUBLE_BOTTOM_LOW_TOLERANCE:
                 return "Double bottom"
 
-    # Fallback: if 6-52 and we didn't classify, cup completion
-    if CUP_CHEAT_WEEKS[0] <= duration_weeks <= CUP_CHEAT_WEEKS[1]:
+    # Fallback: if in cup range and we didn't classify, cup completion
+    if cup_min_weeks <= duration_weeks <= CUP_CHEAT_WEEKS[1]:
         return "Cup completion cheat"
     if CUP_HANDLE_WEEKS[0] <= duration_weeks <= CUP_HANDLE_WEEKS[1]:
         return "Cup w/ handle"
@@ -476,6 +484,10 @@ def _buy_point_date(
 def find_bases(
     df_weekly: pd.DataFrame,
     df_daily: pd.DataFrame,
+    *,
+    relax_uptrend_for_current_base: bool = True,
+    debug: bool = False,
+    pivot: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """
     Detect SEPA bases from weekly and daily (with SMAs) DataFrames.
@@ -483,7 +495,12 @@ def find_bases(
     Returns list of dicts: base_type, start_date, depth_pct, duration_weeks,
     end_date, prior_high, base_low, resistance, buy_point_date (or None),
     is_current (True for the base ending on the last week of data).
-    Only includes bases that pass uptrend_at_date at base start.
+    Only includes bases that pass uptrend_at_date at base start (or at start-1 week for current base when relaxed).
+
+    When relax_uptrend_for_current_base is True, for candidates ending on the last week we also accept
+    uptrend at the week before base start if uptrend at base start fails.
+    When debug is True, prints pivot highs/lows and per-candidate diagnostics to stdout.
+    When pivot is provided and forming, adds a pivot-anchored candidate (last significant high before pivot window).
     """
     results: list[dict[str, Any]] = []
     if df_weekly.empty or len(df_weekly) < 4:
@@ -500,52 +517,101 @@ def find_bases(
     )
     df_daily_atr["ATR"] = atr_series
     pivot_highs, pivot_lows = _pivot_highs_lows(df_weekly)
-    if not pivot_highs:
-        return results
 
-    # Build candidate bases: from each pivot high, find subsequent low(s) and measure depth/duration
-    for hi_idx in pivot_highs:
+    if debug:
+        print("=== Pivot highs (weekly) ===")
+        for i in pivot_highs:
+            print(f"  idx={i} date={df_weekly.index[i]}")
+        print("=== Pivot lows (weekly) ===")
+        for i in pivot_lows:
+            print(f"  idx={i} date={df_weekly.index[i]}")
+
+    # Collect (hi_idx, end_idx) for all candidates: from pivot highs, then trailing high, then pivot-anchored
+    candidate_starts: list[tuple[int, int, str]] = []  # (hi_idx, end_idx, source)
+
+    if pivot_highs:
+        for hi_idx in pivot_highs:
+            next_high_idx = next((i for i in pivot_highs if i > hi_idx), None)
+            if next_high_idx is not None:
+                end_idx = next_high_idx - 1
+            else:
+                end_idx = len(df_weekly) - 1
+            if end_idx <= hi_idx:
+                continue
+            candidate_starts.append((hi_idx, end_idx, "pivot_high"))
+
+    last_week_idx = len(df_weekly) - 1
+    # Trailing-high candidate: week with highest high in last N weeks that is not already a pivot high
+    lookback = min(TRAILING_HIGH_LOOKBACK_WEEKS, last_week_idx)
+    if lookback >= 4:
+        start_idx = max(0, last_week_idx - lookback)
+        segment_trail = df_weekly.iloc[start_idx : last_week_idx + 1]
+        max_high_val = segment_trail["High"].max()
+        for j in range(len(segment_trail) - 1, -1, -1):
+            if float(segment_trail["High"].iloc[j]) >= max_high_val - 1e-9:
+                trailing_hi_idx = start_idx + j
+                break
+        else:
+            trailing_hi_idx = start_idx
+        if trailing_hi_idx not in pivot_highs and trailing_hi_idx <= last_week_idx - 4:
+            if not any(c[0] == trailing_hi_idx and c[2] == "trailing_high" for c in candidate_starts):
+                candidate_starts.append((trailing_hi_idx, last_week_idx, "trailing_high"))
+
+    # Pivot-anchored candidate: when pivot is forming, base start = last significant high before pivot window
+    if pivot and pivot.get("forming") and pivot.get("pivot_start_date") is not None:
+        pivot_start = pd.Timestamp(pivot["pivot_start_date"])
+        before_mask = df_weekly.index < pivot_start
+        if before_mask.any():
+            eligible = df_weekly.loc[before_mask]
+            if len(eligible) >= 5:
+                last_10 = eligible.tail(10)
+                max_label = last_10["High"].idxmax()
+                loc = df_weekly.index.get_loc(max_label)
+                anchor_hi_idx = int(loc) if isinstance(loc, int) else int(loc.start)
+                if not any(c[0] == anchor_hi_idx and c[2] == "pivot_anchored" for c in candidate_starts):
+                    candidate_starts.append((anchor_hi_idx, last_week_idx, "pivot_anchored"))
+
+    for hi_idx, end_idx, source in candidate_starts:
         prior_high = float(df_weekly["High"].iloc[hi_idx])
         start_ts = df_weekly.index[hi_idx]
-        # End of base: next pivot high after hi_idx, or last week
-        next_high_idx = next((i for i in pivot_highs if i > hi_idx), None)
-        if next_high_idx is not None:
-            end_idx = next_high_idx - 1
-        else:
-            end_idx = len(df_weekly) - 1
-        if end_idx <= hi_idx:
-            continue
         segment = df_weekly.iloc[hi_idx : end_idx + 1]
         base_low = float(segment["Low"].min())
         depth_pct = (prior_high - base_low) / prior_high * 100.0 if prior_high > 0 else 0.0
         duration_weeks = end_idx - hi_idx + 1
         latest_close = float(segment["Close"].iloc[-1])
-
-        # Uptrend at base start (use first day of that week for daily lookup)
-        if not uptrend_at_date(df_daily, start_ts):
-            continue
-
-        # Shape heuristics: two lows? handle? prior 8-week run-up?
+        is_current_base = end_idx == last_week_idx
+        cup_range = prior_high - base_low
+        lower_third_bound = base_low + cup_range / 3.0 if cup_range > 0 else base_low
+        in_lower_third = latest_close <= lower_third_bound
         lows_in_segment = [i for i in pivot_lows if hi_idx < i <= end_idx]
         two_lows = len(lows_in_segment) >= 2
-        low1 = float(df_weekly["Low"].iloc[lows_in_segment[0]]) if lows_in_segment else None
-        low2 = float(df_weekly["Low"].iloc[lows_in_segment[1]]) if len(lows_in_segment) >= 2 else None
-        # Handle: second, smaller pullback in upper portion (simplified: two pivot lows with second in upper half of range)
         has_handle = False
         if len(lows_in_segment) >= 2:
             first_low = float(segment["Low"].min())
             mid_range = base_low + (prior_high - base_low) / 2
-            second_low_idx = lows_in_segment[1]
-            second_low = float(df_weekly["Low"].iloc[second_low_idx])
+            second_low = float(df_weekly["Low"].iloc[lows_in_segment[1]])
             if second_low > mid_range and second_low > first_low:
                 has_handle = True
-        # Prior 8-week gain: close 8 weeks before start vs prior_high
-        prior_8wk_gain: float | None = None
+        uptrend_ok = uptrend_at_date(df_daily, start_ts)
+        if not uptrend_ok and is_current_base and relax_uptrend_for_current_base and hi_idx >= 1:
+            prev_ts = df_weekly.index[hi_idx - 1]
+            uptrend_ok = uptrend_at_date(df_daily, prev_ts)
+        if debug:
+            print(f"--- Candidate hi_idx={hi_idx} end_idx={end_idx} source={source} ---")
+            print(f"  start_ts={start_ts} end_ts={df_weekly.index[end_idx]} duration_weeks={duration_weeks} depth_pct={depth_pct:.2f}")
+            print(f"  base_low={base_low} latest_close={latest_close} in_lower_third={in_lower_third} has_handle={has_handle} two_lows={two_lows}")
+            print(f"  uptrend_ok={uptrend_ok} -> ", end="")
+        if not uptrend_ok:
+            if debug:
+                print("SKIP (uptrend)")
+            continue
+        low1 = float(df_weekly["Low"].iloc[lows_in_segment[0]]) if lows_in_segment else None
+        low2 = float(df_weekly["Low"].iloc[lows_in_segment[1]]) if len(lows_in_segment) >= 2 else None
+        prior_8wk_gain = None
         if hi_idx >= 8:
             close_8_ago = float(df_weekly["Close"].iloc[hi_idx - 8])
             if close_8_ago > 0:
                 prior_8wk_gain = (prior_high - close_8_ago) / close_8_ago
-
         base_type = _classify_base(
             duration_weeks=duration_weeks,
             depth_pct=depth_pct,
@@ -557,7 +623,10 @@ def find_bases(
             low2=low2,
             has_handle=has_handle,
             prior_8wk_gain=prior_8wk_gain,
+            is_current_base=is_current_base,
         )
+        if debug:
+            print(f"base_type={base_type}")
         if base_type is None:
             continue
         end_ts = df_weekly.index[end_idx]
@@ -572,7 +641,6 @@ def find_bases(
             has_handle=has_handle,
         )
         buy_point_date = _buy_point_date(df_weekly, hi_idx, end_idx, resistance)
-        # Distance to buy point: % below resistance; 0 if already at/above
         if buy_point_date is not None or resistance <= 0:
             distance_pct = 0.0
         else:
@@ -595,20 +663,17 @@ def find_bases(
             "vcp_like": vcp_like,
         })
 
-    # Deduplicate by start_date (keep first/base type by priority already in _classify_base)
-    seen_starts: set[pd.Timestamp] = set()
-    unique: list[dict[str, Any]] = []
+    last_week = df_weekly.index[-1]
+    # Deduplicate by start_date; when duplicate, prefer the one that extends to last week (current base)
+    by_start: dict[pd.Timestamp, dict[str, Any]] = {}
     for b in results:
         st = b["start_date"]
         if isinstance(st, datetime):
             st = pd.Timestamp(st)
-        if st not in seen_starts:
-            seen_starts.add(st)
-            unique.append(b)
-    last_week = df_weekly.index[-1]
-    for b in unique:
         end_ts = b["end_date"]
         if isinstance(end_ts, datetime):
             end_ts = pd.Timestamp(end_ts)
         b["is_current"] = end_ts == last_week
-    return unique
+        if st not in by_start or b["is_current"]:
+            by_start[st] = b
+    return list(by_start.values())
