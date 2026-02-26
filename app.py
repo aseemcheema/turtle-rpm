@@ -20,6 +20,11 @@ pg = st.navigation([
         title="Specific Entry Point Analysis",
         icon="📊",
     ),
+    st.Page(
+        "pages/2_pivot_breakouts.py",
+        title="Pivot Breakouts Tomorrow",
+        icon="📋",
+    ),
     st.Page("pages/3_portfolio.py", title="Portfolio", icon="💼"),
 ])
 

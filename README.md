@@ -34,6 +34,7 @@ The app will start at http://localhost:8501 by default. Use the Streamlit sideba
 
 - **Home** (overview and quick links)
 - **Specific Entry Point Analysis** (analyze a single symbol and size trades)
+- **Pivot Breakouts Tomorrow** (view latest daily scan of potential pivot breakouts)
 - **Portfolio** (connect to E*TRADE and view accounts/holdings)
 
 ## Symbol list (SEPA page)
@@ -57,6 +58,21 @@ The Specific Entry Point Analysis page includes a **Liquidity risk** section tha
 - **Liquidity-based limit** — max shares and max dollar you can buy such that exiting at a set percentage of ADV per day (default 25%) keeps exit within a set number of days (default 5). This limit is intended to feed into position sizing: final position = min(size from other rules, this liquidity max).
 
 Defaults are 5 days to exit and 25% of ADV per day; the underlying logic lives in `turtle_rpm.liquidity` and can be tuned there or (in the future) via the UI.
+
+## Pivot breakout daily scan
+
+Run **after market close** to compute pivots for all symbols, rank by quality, and flag potential pivot breakouts for the next day:
+
+```bash
+uv run python scripts/pivot_breakout_scan.py
+```
+
+This reads `data/symbols.csv` (or `--symbols path/to.csv`), runs the scan, and writes to `data/pivot_scan/`:
+
+- `pivot_scan_full_YYYYMMDD.csv` — all symbols with pivot/buyable/quality
+- `pivot_breakouts_tomorrow_YYYYMMDD.csv` — buyable only (potential breakouts for tomorrow), sorted by quality
+
+Open the **Pivot Breakouts Tomorrow** page in the app the next morning to view the latest report without re-running. Schedule the script daily (e.g. cron at 5pm ET weekdays) so you are ready before the open.
 
 ## E\*TRADE portfolio integration
 - Open the **Portfolio** page and enter your E\*TRADE consumer key and secret (use Sandbox keys for testing).
