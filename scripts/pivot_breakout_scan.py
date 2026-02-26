@@ -97,6 +97,13 @@ def main() -> int:
         action="store_true",
         help="Skip trend template and RS (faster)",
     )
+    parser.add_argument(
+        "--jobs",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Parallel workers (default: min(8, CPU count)). Use 1 for sequential.",
+    )
     args = parser.parse_args()
 
     symbols_path = args.symbols or _root / get_default_symbols_path()
@@ -131,6 +138,7 @@ def main() -> int:
         min_trend_score=args.min_trend_score,
         require_rs_above_1=args.require_rs,
         progress_callback=_progress,
+        max_workers=args.jobs,
     )
     results.sort(key=lambda r: (r.get("quality_score") or 0), reverse=True)
 

@@ -8,8 +8,9 @@ mark buyable (potential breakout tomorrow), and output reports.
 from __future__ import annotations
 
 import logging
+import os
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Any, Callable
-
 
 import pandas as pd
 
@@ -158,6 +159,57 @@ def is_buyable(
     return True
 
 
+def _scan_one_symbol(
+    symbol: str,
+    name: str,
+    years: int,
+    include_leadership: bool,
+    distance_pct_max: float,
+    min_trend_score: int | None,
+    require_rs_above_1: bool,
+) -> dict[str, Any]:
+    """
+    Worker for parallel scan: compute one symbol and return row with quality_score and buyable.
+    Must be module-level and use only picklable args for ProcessPoolExecutor.
+    """
+    try:
+        row = compute_pivot_result(
+            symbol,
+            years=years,
+            include_leadership=include_leadership,
+            name=name or None,
+        )
+        row["quality_score"] = pivot_quality_score(row)
+        row["buyable"] = is_buyable(
+            row,
+            distance_pct_max=distance_pct_max,
+            min_trend_score=min_trend_score,
+            require_rs_above_1=require_rs_above_1,
+        )
+        return row
+    except Exception as e:
+        logger.warning("Pivot scan %s: %s", symbol, e)
+        return {
+            "symbol": symbol,
+            "name": name,
+            "pivot_forming": False,
+            "pivot_days": None,
+            "pivot_range_pct": None,
+            "tight_closes": False,
+            "pivot_high": None,
+            "in_base": False,
+            "base_type": None,
+            "resistance": None,
+            "distance_pct": None,
+            "buy_point_date": None,
+            "volume_at_pivot": None,
+            "trend_template_score": None,
+            "rs_ratio": None,
+            "quality_score": 0.0,
+            "buyable": False,
+        }
+
+
 def run_scan(
     symbols: list[str] | list[dict[str, str]],
     *,
@@ -167,13 +219,16 @@ def run_scan(
     min_trend_score: int | None = None,
     require_rs_above_1: bool = False,
     progress_callback: Callable[[int, int, str], None] | None = None,
+    max_workers: int | None = None,
 ) -> list[dict[str, Any]]:
     """
     Run pivot scan over a list of symbols. Each item can be a string (symbol)
     or a dict with 'symbol' and optional 'name'.
 
-    progress_callback: if set, called at the start of each symbol with
-      (current_1based_index, total_count, symbol).
+    progress_callback: if set, called when each symbol completes with
+      (completed_count, total_count, symbol).
+
+    max_workers: process pool size (default: min(8, cpu_count)). Use 1 for sequential.
 
     Returns list of result dicts (with quality_score and buyable added), unsorted.
     Caller should sort by quality_score descending and filter buyable for "tomorrow" list.
@@ -192,44 +247,97 @@ def run_scan(
                 sym_list.append(sym)
 
     total = len(sym_list)
-    results: list[dict[str, Any]] = []
-    for i, symbol in enumerate(sym_list):
-        if progress_callback is not None:
-            progress_callback(i + 1, total, symbol)
-        try:
-            row = compute_pivot_result(
+    if total == 0:
+        return []
+
+    workers = max_workers
+    if workers is None:
+        workers = min(8, os.cpu_count() or 4)
+    workers = max(1, workers)
+
+    if workers == 1:
+        # Sequential: no pool overhead
+        results: list[dict[str, Any]] = []
+        for i, symbol in enumerate(sym_list):
+            if progress_callback is not None:
+                progress_callback(i + 1, total, symbol)
+            row = _scan_one_symbol(
                 symbol,
-                years=years,
-                include_leadership=include_leadership,
-                name=name_by_symbol.get(symbol),
-            )
-            row["quality_score"] = pivot_quality_score(row)
-            row["buyable"] = is_buyable(
-                row,
-                distance_pct_max=distance_pct_max,
-                min_trend_score=min_trend_score,
-                require_rs_above_1=require_rs_above_1,
+                name_by_symbol.get(symbol, ""),
+                years,
+                include_leadership,
+                distance_pct_max,
+                min_trend_score,
+                require_rs_above_1,
             )
             results.append(row)
-        except Exception as e:
-            logger.warning("Pivot scan %s: %s", symbol, e)
-            results.append({
-                "symbol": symbol,
-                "name": name_by_symbol.get(symbol, ""),
-                "pivot_forming": False,
-                "pivot_days": None,
-                "pivot_range_pct": None,
-                "tight_closes": False,
-                "pivot_high": None,
-                "in_base": False,
-                "base_type": None,
-                "resistance": None,
-                "distance_pct": None,
-                "buy_point_date": None,
-                "volume_at_pivot": None,
-                "trend_template_score": None,
-                "rs_ratio": None,
-                "quality_score": 0.0,
-                "buyable": False,
-            })
+        return results
+
+    # Parallel: ProcessPoolExecutor (fall back to sequential if pool fails, e.g. in sandbox)
+    results = []
+    try:
+        with ProcessPoolExecutor(max_workers=workers) as executor:
+            future_to_symbol = {
+                executor.submit(
+                    _scan_one_symbol,
+                    symbol,
+                    name_by_symbol.get(symbol, ""),
+                    years,
+                    include_leadership,
+                    distance_pct_max,
+                    min_trend_score,
+                    require_rs_above_1,
+                ): symbol
+                for symbol in sym_list
+            }
+            done = 0
+            for future in as_completed(future_to_symbol):
+                symbol = future_to_symbol[future]
+                done += 1
+                if progress_callback is not None:
+                    progress_callback(done, total, symbol)
+                try:
+                    results.append(future.result())
+                except Exception as e:
+                    logger.warning("Pivot scan %s: %s", symbol, e)
+                    results.append(_error_row(symbol, name_by_symbol.get(symbol, "")))
+    except (PermissionError, OSError) as e:
+        logger.warning("Process pool unavailable (%s), running sequentially", e)
+        workers = 1
+        for i, symbol in enumerate(sym_list):
+            if progress_callback is not None:
+                progress_callback(i + 1, total, symbol)
+            row = _scan_one_symbol(
+                symbol,
+                name_by_symbol.get(symbol, ""),
+                years,
+                include_leadership,
+                distance_pct_max,
+                min_trend_score,
+                require_rs_above_1,
+            )
+            results.append(row)
     return results
+
+
+def _error_row(symbol: str, name: str) -> dict[str, Any]:
+    """Build a single error placeholder row."""
+    return {
+        "symbol": symbol,
+        "name": name,
+        "pivot_forming": False,
+        "pivot_days": None,
+        "pivot_range_pct": None,
+        "tight_closes": False,
+        "pivot_high": None,
+        "in_base": False,
+        "base_type": None,
+        "resistance": None,
+        "distance_pct": None,
+        "buy_point_date": None,
+        "volume_at_pivot": None,
+        "trend_template_score": None,
+        "rs_ratio": None,
+        "quality_score": 0.0,
+        "buyable": False,
+    }
