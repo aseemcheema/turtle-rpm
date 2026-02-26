@@ -116,13 +116,21 @@ def main() -> int:
     full_path = out_dir / f"pivot_scan_full_{today}.csv"
     tomorrow_path = out_dir / f"pivot_breakouts_tomorrow_{today}.csv"
 
-    print(f"Scanning {len(symbols_list)} symbols...")
+    total = len(symbols_list)
+    print(f"Scanning {total} symbols...")
+
+    def _progress(current: int, total_n: int, symbol: str) -> None:
+        # Print every 25 symbols, and always on first and last
+        if current == 1 or current == total_n or current % 25 == 0:
+            print(f"  {current}/{total_n} {symbol}", flush=True)
+
     results = run_scan(
         symbols_list,
         include_leadership=not args.no_leadership,
         distance_pct_max=args.distance_pct,
         min_trend_score=args.min_trend_score,
         require_rs_above_1=args.require_rs,
+        progress_callback=_progress,
     )
     results.sort(key=lambda r: (r.get("quality_score") or 0), reverse=True)
 

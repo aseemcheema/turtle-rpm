@@ -8,7 +8,8 @@ mark buyable (potential breakout tomorrow), and output reports.
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, Callable
+
 
 import pandas as pd
 
@@ -165,10 +166,14 @@ def run_scan(
     distance_pct_max: float = DEFAULT_DISTANCE_PCT_MAX,
     min_trend_score: int | None = None,
     require_rs_above_1: bool = False,
+    progress_callback: Callable[[int, int, str], None] | None = None,
 ) -> list[dict[str, Any]]:
     """
     Run pivot scan over a list of symbols. Each item can be a string (symbol)
     or a dict with 'symbol' and optional 'name'.
+
+    progress_callback: if set, called at the start of each symbol with
+      (current_1based_index, total_count, symbol).
 
     Returns list of result dicts (with quality_score and buyable added), unsorted.
     Caller should sort by quality_score descending and filter buyable for "tomorrow" list.
@@ -186,8 +191,11 @@ def run_scan(
             if sym:
                 sym_list.append(sym)
 
+    total = len(sym_list)
     results: list[dict[str, Any]] = []
-    for symbol in sym_list:
+    for i, symbol in enumerate(sym_list):
+        if progress_callback is not None:
+            progress_callback(i + 1, total, symbol)
         try:
             row = compute_pivot_result(
                 symbol,
