@@ -19,7 +19,11 @@ _root = Path(__file__).resolve().parent.parent
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root))
 
-from turtle_rpm.symbols import get_default_symbols_path, load_symbols_from_file
+from turtle_rpm.symbols import (
+    get_default_symbols_path,
+    load_symbols_from_file,
+    load_symbols_from_mpa_csv,
+)
 from turtle_rpm.pivot_scan import run_scan, DEFAULT_DISTANCE_PCT_MAX
 
 
@@ -98,6 +102,8 @@ def main() -> int:
     symbols_path = args.symbols or _root / get_default_symbols_path()
     symbols_path = symbols_path if symbols_path.is_absolute() else _root / symbols_path
     symbols_list = load_symbols_from_file(symbols_path)
+    if not symbols_list:
+        symbols_list = load_symbols_from_mpa_csv(symbols_path)
     if not symbols_list:
         print(f"No symbols found at {symbols_path}", file=sys.stderr)
         return 1
