@@ -119,7 +119,7 @@ else:
         tomorrow_df = tomorrow_df.sort_values(
             by=sort_col, ascending=sort_asc, na_position="last"
         )
-        st.dataframe(tomorrow_df, use_container_width=True)
+        st.dataframe(tomorrow_df, width="stretch")
 
     # ---- All pivots (filter and sort) ----
     st.subheader("All pivots")
@@ -191,4 +191,4 @@ else:
     )
 
     st.write(f"Showing **{len(filtered)}** of **{len(df)}** rows.")
-    st.dataframe(filtered, use_container_width=True)
+    st.dataframe(filtered, width="stretch")
