@@ -1,0 +1,84 @@
+symbol,name,pivot_forming,pivot_days,pivot_range_pct,tight_closes,pivot_high,in_base,base_type,resistance,distance_pct,buy_point_date,volume_at_pivot,trend_template_score,rs_ratio,quality_score,buyable
+RAPT,,True,10,0.48,True,57.99,True,Darvas box,57.99,0.02,,below,8,4.76,97.54,True
+FOLD,,True,10,0.49,True,14.37,True,Cup completion cheat,14.38,0.07,,below,8,1.77,97.34,True
+DBRG,,True,10,0.71,True,15.46,True,Cup w/ handle,15.47,0.13,,below,8,1.29,96.06,True
+EXAS,,True,10,0.69,True,103.67,True,Darvas box,103.67,0.28,,below,8,2.07,95.71,True
+PKST,,True,10,0.93,True,20.88,True,Darvas box,20.97,0.52,,below,8,1.56,93.79,True
+AAUC,,True,10,2.02,True,31.66,True,Darvas box,32.08,1.37,,below,8,2.15,85.79,True
+GLDD,,True,10,0.71,True,16.97,True,Darvas box,16.99,0.24,,above,8,1.34,85.73,True
+AZN,,True,10,4.05,True,210.52,True,Darvas box,210.52,0.98,,below,8,1.24,76.81,True
+FER,,True,10,5.2,True,74.79,True,Darvas box,74.79,0.55,,below,8,1.28,72.35,True
+SU,,True,10,4.97,True,57.13,True,Darvas box,57.13,1.07,,below,8,1.28,71.94,True
+HAL,,True,8,5.53,True,36.19,True,Darvas box,36.19,0.53,,below,8,1.52,70.76,True
+PSMT,,True,10,4.89,True,157.12,True,Darvas box,157.16,1.62,,below,8,1.35,70.69,True
+JNJ,,True,10,3.99,True,248.94,True,Darvas box,248.94,0.2,,above,8,1.35,69.45,True
+VLO,,True,10,5.54,True,205.99,True,Darvas box,206.77,1.03,,below,8,1.29,69.21,True
+LMT,,True,10,5.33,True,669.75,True,Darvas box,669.75,1.74,,below,8,1.38,68.13,True
+CAH,,True,10,5.99,True,230.2,True,Darvas box,230.81,0.68,,below,8,1.45,68.01,True
+TATT,,True,3,5.22,True,56.5,True,Darvas box,56.5,2.0,,below,8,1.38,67.9,True
+ALMS,,True,3,4.7,True,30.03,True,Power Play,30.6,2.97,,below,8,5.94,67.59,True
+PH,,True,10,5.02,True,1034.96,True,Darvas box,1034.96,2.49,,below,8,1.25,67.43,True
+TKR,,True,10,5.13,True,110.51,True,Darvas box,111.03,2.39,,below,8,1.31,67.18,True
+AU,,True,3,6.3,True,128.54,True,Darvas box,128.54,0.6,,below,8,2.2,66.7,True
+JCI,,True,10,5.88,True,146.49,True,Darvas box,146.49,1.49,,below,8,1.25,66.13,True
+XOM,,True,10,5.53,True,153.65,True,Darvas box,155.89,2.18,,below,8,1.29,65.81,True
+RBC,,True,10,6.25,True,581.87,True,Darvas box,581.87,1.02,,below,8,1.36,65.69,True
+VAL,,True,4,6.54,True,97.37,True,Power Play,96.4,0.57,,below,8,1.84,65.59,True
+NEOG,,True,10,6.04,True,11.43,True,Darvas box,11.43,1.75,,below,8,1.84,64.55,True
+ADEA,,True,3,6.31,True,21.07,True,Darvas box,21.07,1.8,,below,8,1.26,63.05,True
+AIR,,True,10,6.37,True,119.24,True,Darvas box,119.24,1.74,,below,8,1.45,62.93,True
+CASY,,True,10,5.17,True,690.0,True,Darvas box,690.0,0.64,,above,8,1.3,62.23,True
+AXIA,,True,6,5.52,True,12.31,True,Cup completion cheat,12.12,0.33,,above,8,1.43,61.41,True
+TIMB,,True,10,7.18,True,27.56,True,Darvas box,27.74,0.94,,below,8,1.2,61.28,True
+NVS,,True,10,5.11,True,170.46,True,Darvas box,170.46,1.08,,above,8,1.25,61.21,True
+GVA,,True,10,6.59,True,137.24,True,Darvas box,137.24,2.03,,below,8,1.15,60.96,True
+NGG,,True,10,5.31,True,94.64,True,Darvas box,94.64,0.92,,above,8,1.26,60.69,True
+SLB,,True,10,6.67,True,52.33,True,Darvas box,52.4,2.02,,below,8,1.35,60.59,True
+ELVN,,True,3,6.86,True,30.04,True,Darvas box,30.22,1.75,,below,8,1.37,60.45,True
+TDY,,True,10,7.05,True,691.87,True,Darvas box,691.87,1.56,,below,8,1.18,60.07,True
+HBM,,True,3,5.15,True,28.53,True,Darvas box,28.74,1.43,,above,8,2.26,59.96,True
+SNEX,,True,10,6.42,True,131.0,True,Darvas box,131.0,2.67,,below,8,1.19,59.89,True
+WAB,,True,10,5.56,True,266.27,True,Darvas box,266.27,0.87,,above,8,1.28,59.59,True
+FDX,,True,10,7.19,True,392.86,True,Darvas box,392.86,1.49,,below,8,1.59,59.58,True
+TFPM,,True,3,5.15,False,41.38,True,Darvas box,41.38,0.06,,below,8,1.46,59.07,True
+PHVS,,True,6,7.0,True,28.99,True,Darvas box,28.99,2.07,,below,8,1.17,58.79,True
+HII,,True,8,7.56,True,450.45,True,Darvas box,450.45,1.32,,below,8,1.54,58.24,True
+FCX,,True,4,7.08,True,69.75,True,Darvas box,69.75,2.39,,below,8,1.45,57.43,True
+NOC,,True,10,7.02,True,743.17,True,Darvas box,743.17,2.53,,below,8,1.17,57.31,True
+MRK,,True,10,4.91,False,125.14,True,Darvas box,125.14,1.05,,below,8,1.43,57.3,True
+RIO,,True,10,7.33,True,101.53,True,Darvas box,101.53,2.16,,below,8,1.49,56.87,True
+ENSG,,True,10,5.87,True,216.85,True,Darvas box,216.92,1.27,,above,8,1.17,56.84,True
+SBS,,True,10,7.44,True,30.63,True,Darvas box,30.63,2.02,,below,8,1.26,56.74,True
+FNV,,True,5,7.91,True,284.5,True,Darvas box,284.5,1.37,,below,8,1.43,56.34,True
+ATMU,,True,10,5.21,True,66.5,True,Darvas box,66.5,2.96,,above,8,1.36,55.07,True
+DAR,,True,10,6.52,True,53.71,True,Darvas box,53.71,1.02,,above,8,1.46,54.34,True
+WFRD,,True,10,7.9,True,108.14,True,Darvas box,108.14,2.48,,below,8,1.56,53.06,True
+ERIC,,True,10,6.19,False,11.64,True,Darvas box,11.64,0.34,,below,8,1.4,53.03,True
+TD,,True,10,5.92,True,99.84,True,Darvas box,99.84,2.48,,above,8,1.26,52.96,True
+STOK,,True,4,7.92,True,37.11,True,Cup completion cheat,37.34,2.49,,below,8,1.73,52.93,True
+SCCO,,True,3,7.99,True,223.89,True,Darvas box,223.89,2.5,,below,8,2.18,52.55,True
+FCFS,,True,3,6.16,False,193.96,True,Darvas box,193.96,0.6,,below,8,1.23,52.4,True
+ATI,,True,6,7.49,True,164.26,True,Darvas box,158.99,0.08,,above,8,1.96,52.31,True
+ESLT,,True,6,7.06,True,775.99,True,Darvas box,775.99,0.9,,above,8,1.5,52.0,True
+GSL,,True,8,7.68,True,41.13,True,Darvas box,41.13,0.12,,above,8,1.33,51.24,True
+OR,,True,3,6.14,False,48.06,True,Darvas box,48.06,1.39,,below,8,1.43,50.13,True
+EIX,,True,9,7.87,True,75.5,True,Cup w/ handle,73.9,0.22,,above,8,1.32,49.99,True
+SKE,,True,3,6.76,False,38.32,True,Darvas box,38.32,0.52,,below,8,2.29,49.64,True
+CW,,True,10,6.68,True,719.05,True,Darvas box,719.05,2.6,,above,8,1.36,48.8,True
+KNX,,True,10,7.29,False,62.98,True,Darvas box,62.98,0.1,,below,8,1.36,48.25,True
+HROW,,True,5,7.63,True,54.49,True,Cup completion cheat,54.85,1.22,,above,8,1.31,48.19,True
+RGLD,,True,5,6.46,False,300.5,True,Darvas box,306.25,2.11,,below,8,1.61,46.37,True
+MRNA,,True,3,6.0,False,53.85,True,Power Play,55.2,2.95,,below,8,2.06,46.15,True
+AMAT,,True,6,7.66,False,395.95,True,Cup w/ handle,377.11,0.46,,below,8,2.13,45.32,True
+JBHT,,True,10,7.65,False,233.98,True,Darvas box,234.82,0.6,,below,8,1.53,44.95,True
+WPM,,True,5,7.81,False,164.39,True,Darvas box,164.39,0.45,,below,8,1.58,44.6,True
+MNST,,True,10,7.85,True,87.38,True,Darvas box,87.38,2.38,,above,8,1.29,43.61,True
+FSM,,True,4,7.51,False,13.84,True,Darvas box,13.84,1.3,,below,8,1.72,43.55,True
+BKTI,,True,5,7.09,False,89.5,True,Cup completion cheat,89.23,2.4,,below,8,1.17,42.35,True
+PAAS,,True,3,8.0,False,68.91,True,Cup completion cheat,69.99,1.84,,below,8,1.96,39.48,True
+TSM,,True,6,7.97,False,390.21,True,Darvas box,380.0,2.49,,below,8,1.49,37.68,True
+MEOH,,True,10,7.91,False,50.79,True,Darvas box,51.94,2.71,,below,8,1.34,37.32,True
+DLX,,True,8,7.95,False,28.57,True,Darvas box,28.57,2.87,,below,8,1.38,36.64,True
+RTX,,True,10,6.66,False,206.36,True,Darvas box,206.36,1.81,,above,8,1.19,36.27,True
+NYT,,True,7,7.75,False,79.91,True,Darvas box,79.91,0.15,,above,8,1.26,35.8,True
+SAIA,,True,5,7.45,False,410.61,True,Darvas box,417.85,2.98,,above,8,1.3,28.81,True

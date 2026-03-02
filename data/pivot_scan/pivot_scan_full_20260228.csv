@@ -1,0 +1,620 @@
+symbol,name,pivot_forming,pivot_days,pivot_range_pct,tight_closes,pivot_high,in_base,base_type,resistance,distance_pct,buy_point_date,volume_at_pivot,trend_template_score,rs_ratio,quality_score,buyable
+RAPT,,True,10,0.48,True,57.99,True,Darvas box,57.99,0.02,,below,8,4.76,97.54,True
+FOLD,,True,10,0.49,True,14.37,True,Cup completion cheat,14.38,0.07,,below,8,1.77,97.34,True
+DBRG,,True,10,0.71,True,15.46,True,Cup w/ handle,15.47,0.13,,below,8,1.29,96.06,True
+EXAS,,True,10,0.69,True,103.67,True,Darvas box,103.67,0.28,,below,8,2.07,95.71,True
+PKST,,True,10,0.93,True,20.88,True,Darvas box,20.97,0.52,,below,8,1.56,93.79,True
+AAUC,,True,10,2.02,True,31.66,True,Darvas box,32.08,1.37,,below,8,2.15,85.79,True
+GLDD,,True,10,0.71,True,16.97,True,Darvas box,16.99,0.24,,above,8,1.34,85.73,True
+CFLT,,True,10,0.78,True,30.76,True,Cup completion cheat,30.62,0.0,2026-02-20,below,8,1.44,81.1,False
+AZN,,True,10,4.05,True,210.52,True,Darvas box,210.52,0.98,,below,8,1.24,76.81,True
+FER,,True,10,5.2,True,74.79,True,Darvas box,74.79,0.55,,below,8,1.28,72.35,True
+SU,,True,10,4.97,True,57.13,True,Darvas box,57.13,1.07,,below,8,1.28,71.94,True
+HAL,,True,8,5.53,True,36.19,True,Darvas box,36.19,0.53,,below,8,1.52,70.76,True
+PSMT,,True,10,4.89,True,157.12,True,Darvas box,157.16,1.62,,below,8,1.35,70.69,True
+JNJ,,True,10,3.99,True,248.94,True,Darvas box,248.94,0.2,,above,8,1.35,69.45,True
+VLO,,True,10,5.54,True,205.99,True,Darvas box,206.77,1.03,,below,8,1.29,69.21,True
+FRGE,,True,10,1.29,True,45.03,True,Cup completion cheat,44.88,0.0,2026-02-27,above,8,2.21,68.55,False
+LMT,,True,10,5.33,True,669.75,True,Darvas box,669.75,1.74,,below,8,1.38,68.13,True
+CAH,,True,10,5.99,True,230.2,True,Darvas box,230.81,0.68,,below,8,1.45,68.01,True
+TATT,,True,3,5.22,True,56.5,True,Darvas box,56.5,2.0,,below,8,1.38,67.9,True
+ALMS,,True,3,4.7,True,30.03,True,Power Play,30.6,2.97,,below,8,5.94,67.59,True
+PH,,True,10,5.02,True,1034.96,True,Darvas box,1034.96,2.49,,below,8,1.25,67.43,True
+TKR,,True,10,5.13,True,110.51,True,Darvas box,111.03,2.39,,below,8,1.31,67.18,True
+AU,,True,3,6.3,True,128.54,True,Darvas box,128.54,0.6,,below,8,2.2,66.7,True
+JCI,,True,10,5.88,True,146.49,True,Darvas box,146.49,1.49,,below,8,1.25,66.13,True
+XOM,,True,10,5.53,True,153.65,True,Darvas box,155.89,2.18,,below,8,1.29,65.81,True
+RBC,,True,10,6.25,True,581.87,True,Darvas box,581.87,1.02,,below,8,1.36,65.69,True
+VAL,,True,4,6.54,True,97.37,True,Power Play,96.4,0.57,,below,8,1.84,65.59,True
+NEOG,,True,10,6.04,True,11.43,True,Darvas box,11.43,1.75,,below,8,1.84,64.55,True
+BG,,True,10,5.42,True,124.55,True,Darvas box,124.55,3.13,,below,8,1.36,63.51,False
+KNOP,,True,10,4.85,True,10.72,True,Darvas box,11.15,4.13,,below,8,1.34,63.36,False
+ADEA,,True,3,6.31,True,21.07,True,Darvas box,21.07,1.8,,below,8,1.26,63.05,True
+AIR,,True,10,6.37,True,119.24,True,Darvas box,119.24,1.74,,below,8,1.45,62.93,True
+WBD,,True,10,4.45,True,29.2,True,Cup completion cheat,30.0,6.1,,below,7,2.2,62.75,False
+CASY,,True,10,5.17,True,690.0,True,Darvas box,690.0,0.64,,above,8,1.3,62.23,True
+AXIA,,True,6,5.52,True,12.31,True,Cup completion cheat,12.12,0.33,,above,8,1.43,61.41,True
+ATNI,,True,10,5.75,True,29.41,True,Darvas box,29.8,3.29,,below,8,1.74,61.38,False
+TIMB,,True,10,7.18,True,27.56,True,Darvas box,27.74,0.94,,below,8,1.2,61.28,True
+NVS,,True,10,5.11,True,170.46,True,Darvas box,170.46,1.08,,above,8,1.25,61.21,True
+GVA,,True,10,6.59,True,137.24,True,Darvas box,137.24,2.03,,below,8,1.15,60.96,True
+NGG,,True,10,5.31,True,94.64,True,Darvas box,94.64,0.92,,above,8,1.26,60.69,True
+SLB,,True,10,6.67,True,52.33,True,Darvas box,52.4,2.02,,below,8,1.35,60.59,True
+ELVN,,True,3,6.86,True,30.04,True,Darvas box,30.22,1.75,,below,8,1.37,60.45,True
+TDY,,True,10,7.05,True,691.87,True,Darvas box,691.87,1.56,,below,8,1.18,60.07,True
+HBM,,True,3,5.15,True,28.53,True,Darvas box,28.74,1.43,,above,8,2.26,59.96,True
+SNEX,,True,10,6.42,True,131.0,True,Darvas box,131.0,2.67,,below,8,1.19,59.89,True
+WAB,,True,10,5.56,True,266.27,True,Darvas box,266.27,0.87,,above,8,1.28,59.59,True
+FDX,,True,10,7.19,True,392.86,True,Darvas box,392.86,1.49,,below,8,1.59,59.58,True
+TFPM,,True,3,5.15,False,41.38,True,Darvas box,41.38,0.06,,below,8,1.46,59.07,True
+PHVS,,True,6,7.0,True,28.99,True,Darvas box,28.99,2.07,,below,8,1.17,58.79,True
+CMI,,True,10,5.31,True,607.55,True,Darvas box,615.91,5.2,,below,8,1.38,58.45,False
+HII,,True,8,7.56,True,450.45,True,Darvas box,450.45,1.32,,below,8,1.54,58.24,True
+IRMD,,True,10,6.06,True,103.97,True,Darvas box,107.69,3.86,,below,8,1.35,58.12,False
+GILT,,True,3,5.44,True,15.98,True,Cup completion cheat,20.38,21.98,,below,8,1.56,57.8,False
+FCX,,True,4,7.08,True,69.75,True,Darvas box,69.75,2.39,,below,8,1.45,57.43,True
+NOC,,True,10,7.02,True,743.17,True,Darvas box,743.17,2.53,,below,8,1.17,57.31,True
+MRK,,True,10,4.91,False,125.14,True,Darvas box,125.14,1.05,,below,8,1.43,57.3,True
+CX,,True,10,5.58,True,12.91,True,Darvas box,13.35,6.29,,below,8,1.3,57.1,False
+RIO,,True,10,7.33,True,101.53,True,Darvas box,101.53,2.16,,below,8,1.49,56.87,True
+ENSG,,True,10,5.87,True,216.85,True,Darvas box,216.92,1.27,,above,8,1.17,56.84,True
+SBS,,True,10,7.44,True,30.63,True,Darvas box,30.63,2.02,,below,8,1.26,56.74,True
+FNV,,True,5,7.91,True,284.5,True,Darvas box,284.5,1.37,,below,8,1.43,56.34,True
+STLD,,True,10,5.78,True,196.35,True,Darvas box,208.47,7.36,,below,8,1.39,56.1,False
+ACNT,,True,10,6.25,True,17.92,True,Darvas box,17.92,4.24,,below,8,1.35,56.03,False
+BLTE,,True,5,5.89,True,192.28,True,Darvas box,200.0,4.85,,below,8,2.77,56.0,False
+HAS,,True,10,5.8,True,102.85,True,Darvas box,106.25,6.27,,below,8,1.17,56.0,False
+GFI,,True,3,6.08,True,59.36,True,Darvas box,61.64,4.54,,below,8,1.72,55.98,False
+DD,,True,10,5.94,True,51.99,True,Darvas box,52.66,4.98,,below,8,1.46,55.36,False
+ATMU,,True,10,5.21,True,66.5,True,Darvas box,66.5,2.96,,above,8,1.36,55.07,True
+AVT,,True,10,6.87,True,68.29,True,Darvas box,68.29,3.59,,below,8,1.15,54.88,False
+KGC,,True,3,6.05,True,37.34,True,Darvas box,39.11,5.42,,below,8,1.72,54.75,False
+WWD,,True,10,6.67,True,399.08,True,Darvas box,402.98,4.03,,below,8,1.46,54.56,False
+VOD,,True,10,4.02,False,15.91,True,Darvas box,15.91,3.46,,below,8,1.24,54.52,False
+NGL,,True,10,6.11,True,12.28,True,Darvas box,13.0,7.69,,below,8,2.11,54.45,False
+THC,,True,10,6.13,True,240.83,True,Cup completion cheat,222.82,0.0,2026-02-13,below,8,1.22,54.35,False
+DAR,,True,10,6.52,True,53.71,True,Darvas box,53.71,1.02,,above,8,1.46,54.34,True
+NATR,,True,7,6.19,True,27.96,True,Cup completion cheat,24.12,0.0,2026-01-23,below,8,1.58,54.05,False
+GSK,,True,10,5.16,True,61.21,True,Darvas box,61.21,3.39,,above,8,1.43,54.03,False
+NVST,,True,10,6.87,True,29.94,True,Darvas box,30.42,3.98,,below,8,1.29,53.71,False
+MYE,,True,10,7.3,True,23.14,True,Darvas box,23.14,3.33,,below,8,1.27,53.51,False
+ROST,,True,10,6.34,True,206.4,True,Cup completion cheat,194.92,0.0,2026-02-13,below,8,1.3,53.3,False
+HE,,True,7,6.36,True,16.2,True,Darvas box,17.38,10.87,,below,8,1.13,53.2,False
+GRDN,,True,10,6.85,True,34.16,True,Darvas box,34.98,4.2,,below,8,1.21,53.15,False
+COGT,,True,3,6.38,True,40.45,True,Cup completion cheat,42.25,8.05,,below,8,3.02,53.1,False
+IX,,True,10,4.97,True,36.41,True,Darvas box,37.04,4.02,,above,8,1.28,53.09,False
+WFRD,,True,10,7.9,True,108.14,True,Darvas box,108.14,2.48,,below,8,1.56,53.06,True
+ERIC,,True,10,6.19,False,11.64,True,Darvas box,11.64,0.34,,below,8,1.4,53.03,True
+TD,,True,10,5.92,True,99.84,True,Darvas box,99.84,2.48,,above,8,1.26,52.96,True
+STOK,,True,4,7.92,True,37.11,True,Cup completion cheat,37.34,2.49,,below,8,1.73,52.93,True
+TEVA,,True,10,6.46,True,35.32,True,Darvas box,37.35,9.34,,below,8,1.77,52.7,False
+SCCO,,True,3,7.99,True,223.89,True,Darvas box,223.89,2.5,,below,8,2.18,52.55,True
+CTRN,,True,3,7.1,True,48.6,True,Cup completion cheat,49.37,4.03,,below,8,1.21,52.41,False
+FCFS,,True,3,6.16,False,193.96,True,Darvas box,193.96,0.6,,below,8,1.23,52.4,True
+ATI,,True,6,7.49,True,164.26,True,Darvas box,158.99,0.08,,above,8,1.96,52.31,True
+GE,,True,8,6.57,True,348.48,True,Cup completion cheat,332.79,0.0,2026-02-20,below,8,1.17,52.15,False
+HP,,True,8,7.56,True,36.12,True,Darvas box,36.45,3.38,,below,8,1.67,52.06,False
+ESLT,,True,6,7.06,True,775.99,True,Darvas box,775.99,0.9,,above,8,1.5,52.0,True
+EZPW,,True,7,7.37,True,26.59,True,Darvas box,26.35,3.72,,below,8,1.51,51.99,False
+CMP,,True,3,6.66,True,25.82,True,Darvas box,27.0,6.67,,below,7,1.23,51.7,False
+EHAB,,True,5,0.66,True,13.64,False,,,,,above,7,1.62,51.7,False
+HWM,,True,10,6.71,True,262.63,True,Cup completion cheat,226.74,0.0,2026-02-13,below,8,1.4,51.45,False
+MTSI,,True,8,6.75,True,256.12,True,Cup completion cheat,190.95,0.0,2026-01-16,below,8,1.74,51.25,False
+GSL,,True,8,7.68,True,41.13,True,Darvas box,41.13,0.12,,above,8,1.33,51.24,True
+ENGN,,True,4,6.81,True,10.28,True,Cup completion cheat,12.25,17.47,,below,8,2.0,50.95,False
+TPH,,True,10,0.84,True,46.62,False,,,,,above,8,1.23,50.8,False
+AXGN,,True,3,4.9,True,32.45,True,Darvas box,36.0,11.86,,above,7,1.84,50.5,False
+GOLD,,True,4,6.91,True,58.17,True,Power Play,66.47,13.54,,below,8,2.38,50.45,False
+CNTA,,True,4,6.93,True,27.56,True,Cup completion cheat,26.83,0.0,2026-02-27,below,8,1.53,50.35,False
+EMBJ,,True,10,6.95,True,74.85,True,Darvas box,80.75,10.56,,below,8,1.2,50.25,False
+OR,,True,3,6.14,False,48.06,True,Darvas box,48.06,1.39,,below,8,1.43,50.13,True
+EIX,,True,9,7.87,True,75.5,True,Cup w/ handle,73.9,0.22,,above,8,1.32,49.99,True
+B,,True,5,7.03,True,51.02,True,Darvas box,54.23,6.44,,below,8,1.85,49.85,False
+GOOG,,True,10,7.06,True,319.45,True,Darvas box,350.15,11.06,,below,7,1.38,49.7,False
+SKE,,True,3,6.76,False,38.32,True,Darvas box,38.32,0.52,,below,8,2.29,49.64,True
+ENS,,True,7,7.13,True,177.22,True,Darvas box,194.77,14.69,,below,8,1.53,49.35,False
+ARWR,,True,10,7.17,True,65.59,True,Low cheat,76.76,17.57,,below,7,2.66,49.15,False
+CPAC,,True,8,7.21,True,11.1,True,Darvas box,11.5,7.74,,below,7,1.57,48.95,False
+ULTA,,True,10,7.69,True,714.97,True,Darvas box,714.97,4.22,,below,8,1.21,48.89,False
+CW,,True,10,6.68,True,719.05,True,Darvas box,719.05,2.6,,above,8,1.36,48.8,True
+NPK,,True,6,7.73,True,134.38,True,Darvas box,137.78,4.24,,below,8,1.16,48.63,False
+CNQ,,True,8,7.29,True,44.04,True,Cup completion cheat,35.12,0.0,2026-01-23,below,8,1.31,48.55,False
+CRS,,True,7,7.32,True,403.81,True,Cup completion cheat,348.79,0.0,2026-02-06,below,8,1.55,48.4,False
+CLB,,True,3,5.32,True,17.87,True,Darvas box,20.35,13.56,,above,7,1.46,48.4,False
+MEC,,True,10,7.32,True,22.27,True,Darvas box,22.36,6.1,,below,8,1.35,48.4,False
+MCK,,True,10,7.32,True,987.37,True,Darvas box,987.37,0.0,2026-02-27,below,8,1.37,48.4,False
+HLF,,True,6,7.75,True,20.4,True,Darvas box,20.4,4.31,,below,8,2.0,48.32,False
+KNX,,True,10,7.29,False,62.98,True,Darvas box,62.98,0.1,,below,8,1.36,48.25,True
+HROW,,True,5,7.63,True,54.49,True,Cup completion cheat,54.85,1.22,,above,8,1.31,48.19,True
+DG,,True,10,7.4,True,158.23,True,Cup completion cheat,154.75,0.0,2026-02-27,below,8,1.33,48.0,False
+BIOA,,True,3,7.43,True,23.0,True,Cup completion cheat,24.0,7.21,,below,8,4.36,47.85,False
+NOV,,True,8,7.43,True,20.86,True,Cup completion cheat,16.96,0.0,2026-01-09,below,8,1.46,47.85,False
+GRC,,True,10,7.53,True,68.02,True,Darvas box,68.02,5.57,,below,8,1.42,47.35,False
+DY,,True,10,7.56,True,433.79,True,Darvas box,445.53,5.73,,below,8,1.54,47.2,False
+KMT,,True,10,6.55,True,40.59,True,Darvas box,41.74,3.5,,above,8,1.77,46.75,False
+ORKA,,True,3,7.66,True,36.53,True,Darvas box,36.53,5.8,,below,8,2.12,46.7,False
+PKX,,True,7,7.68,True,71.35,True,Cup completion cheat,54.94,0.0,2026-01-16,below,8,1.24,46.6,False
+ELA,,True,9,7.7,True,13.76,True,Darvas box,15.11,10.92,,below,8,1.72,46.5,False
+SLAB,,True,10,1.71,True,207.54,False,,,,,above,8,1.4,46.45,False
+RGLD,,True,5,6.46,False,300.5,True,Darvas box,306.25,2.11,,below,8,1.61,46.37,True
+NVT,,True,4,6.5,True,122.92,True,Darvas box,122.92,3.71,,above,8,1.21,46.37,False
+KLAC,,True,6,7.75,True,1577.35,True,Darvas box,1691.15,9.85,,below,8,1.61,46.25,False
+ANAB,,True,6,7.76,True,57.74,True,Cup completion cheat,52.47,0.0,2026-02-13,below,8,2.57,46.2,False
+MRNA,,True,3,6.0,False,53.85,True,Power Play,55.2,2.95,,below,8,2.06,46.15,True
+UMC,,True,5,7.79,True,11.04,True,Darvas box,12.68,17.67,,below,8,1.47,46.05,False
+CCJ,,True,6,7.83,True,124.3,True,Darvas box,135.24,12.45,,below,8,1.42,45.85,False
+ASMB,,True,5,7.84,True,30.62,True,Cup completion cheat,38.99,23.47,,below,8,1.1,45.8,False
+ZUMZ,,True,3,7.85,True,27.13,True,Cup completion cheat,29.68,11.66,,below,8,1.4,45.75,False
+BKR,,True,8,7.87,True,65.78,True,Cup completion cheat,50.93,0.0,2026-01-16,below,8,1.36,45.65,False
+NXE,,True,5,7.9,True,13.16,True,Cup completion cheat,13.96,8.45,,below,8,1.62,45.5,False
+TX,,True,10,6.15,True,44.7,True,Darvas box,45.57,4.61,,above,8,1.23,45.42,False
+AMAT,,True,6,7.66,False,395.95,True,Cup w/ handle,377.11,0.46,,below,8,2.13,45.32,True
+MRCY,,True,8,7.94,True,90.78,True,Cup completion cheat,103.84,14.26,,below,8,1.22,45.3,False
+JBHT,,True,10,7.65,False,233.98,True,Darvas box,234.82,0.6,,below,8,1.53,44.95,True
+WPM,,True,5,7.81,False,164.39,True,Darvas box,164.39,0.45,,below,8,1.58,44.6,True
+MT,,True,8,6.12,True,67.6,True,Cup completion cheat,46.49,0.0,2026-01-02,above,8,1.87,44.4,False
+PDFS,,True,3,6.18,True,34.81,True,Cup completion cheat,36.99,8.68,,above,8,1.59,44.1,False
+MAMA,,True,3,6.81,True,17.85,True,Darvas box,17.85,3.98,,above,8,2.0,44.01,False
+BBVA,,True,10,6.21,True,23.99,True,Darvas box,26.2,11.72,,above,7,1.22,43.95,False
+PWR,,True,6,6.25,True,573.94,True,Cup completion cheat,473.87,0.0,2026-01-30,above,8,1.37,43.75,False
+MNST,,True,10,7.85,True,87.38,True,Darvas box,87.38,2.38,,above,8,1.29,43.61,True
+FSM,,True,4,7.51,False,13.84,True,Darvas box,13.84,1.3,,below,8,1.72,43.55,True
+PBT,,True,6,7.32,True,20.49,True,Darvas box,20.49,3.39,,above,8,1.14,43.23,False
+TS,,True,7,6.45,True,54.86,True,Cup completion cheat,41.59,0.0,2026-01-16,above,8,1.41,42.75,False
+ADI,,True,8,6.48,True,363.2,True,Cup completion cheat,284.23,0.0,2026-01-09,above,8,1.33,42.6,False
+CUK,,True,3,5.48,False,32.86,True,Darvas box,33.56,6.24,,below,8,1.01,42.6,False
+GXO,,True,10,6.48,True,66.35,True,Darvas box,66.85,6.01,,above,8,1.12,42.6,False
+AZZ,,True,10,7.3,True,141.18,True,Darvas box,141.18,3.68,,above,8,1.12,42.46,False
+BKTI,,True,5,7.09,False,89.5,True,Cup completion cheat,89.23,2.4,,below,8,1.17,42.35,True
+ELPC,,True,6,6.55,True,11.76,True,Cup completion cheat,10.39,0.0,2026-02-13,above,8,1.3,42.25,False
+HSBC,,True,3,2.57,True,94.8,False,,,,,above,8,1.36,42.15,False
+EYPT,,True,4,6.69,True,17.95,True,Cup completion cheat,19.0,7.58,,above,8,1.42,41.55,False
+VALE,,True,5,4.72,True,17.6,False,,,,,below,8,1.66,41.4,False
+TERN,,True,4,6.77,True,42.24,True,Cup completion cheat,45.17,6.75,,above,8,5.6,41.15,False
+NE,,True,7,6.79,True,47.44,True,Cup completion cheat,33.46,0.0,2026-01-23,above,8,1.54,41.05,False
+BAP,,True,8,6.91,True,360.83,True,Darvas box,380.2,8.9,,above,8,1.27,40.45,False
+CAAP,,True,10,7.0,True,29.57,True,Darvas box,30.5,6.56,,above,8,1.23,40.0,False
+GHM,,True,3,5.06,True,83.21,False,,,,,below,8,1.55,39.7,False
+APG,,True,10,7.08,True,46.89,True,Darvas box,46.89,5.18,,above,8,1.16,39.6,False
+PAAS,,True,3,8.0,False,68.91,True,Cup completion cheat,69.99,1.84,,below,8,1.96,39.48,True
+CDLR,,True,10,5.15,True,26.79,False,,,,,below,8,1.13,39.25,False
+HRTG,,True,3,7.17,True,28.59,True,Cup completion cheat,30.57,8.83,,above,8,1.17,39.15,False
+GOOGL,,True,10,7.28,True,319.52,True,Darvas box,349.0,10.67,,above,7,1.39,38.6,False
+FIVE,,True,4,5.37,True,229.33,False,,,,,below,8,1.4,38.15,False
+TSM,,True,6,7.97,False,390.21,True,Darvas box,380.0,2.49,,below,8,1.49,37.68,True
+SA,,True,3,6.52,False,39.39,True,Cup completion cheat,37.99,0.0,2026-02-27,below,8,2.24,37.4,False
+MEOH,,True,10,7.91,False,50.79,True,Darvas box,51.94,2.71,,below,8,1.34,37.32,True
+HTHT,,True,9,7.63,True,56.64,True,Cup completion cheat,51.46,0.0,2026-02-06,above,8,1.42,36.85,False
+IONS,,True,10,7.66,True,85.47,True,Darvas box,86.74,6.44,,above,7,1.79,36.7,False
+SII,,True,3,5.67,True,167.47,False,,,,,below,8,2.34,36.65,False
+ARCB,,True,4,6.67,False,102.88,True,Darvas box,112.8,8.99,,below,8,1.32,36.65,False
+DLX,,True,8,7.95,False,28.57,True,Darvas box,28.57,2.87,,below,8,1.38,36.64,True
+CM,,True,7,7.71,True,105.0,True,Cup completion cheat,93.43,0.0,2026-02-06,above,8,1.23,36.45,False
+RTX,,True,10,6.66,False,206.36,True,Darvas box,206.36,1.81,,above,8,1.19,36.27,True
+AEO,,True,4,6.78,False,25.23,True,Low cheat,28.33,13.28,,below,7,1.78,36.1,False
+NYT,,True,7,7.75,False,79.91,True,Darvas box,79.91,0.15,,above,8,1.26,35.8,True
+KRYS,,True,5,5.89,True,277.03,False,,,,,below,8,1.72,35.55,False
+BSAC,,True,10,6.89,False,36.27,True,Darvas box,37.72,10.1,,below,7,1.33,35.55,False
+ELE,,True,3,6.91,False,23.74,True,Cup completion cheat,26.96,12.35,,below,8,1.5,35.45,False
+MAZE,,True,5,6.93,False,47.49,True,Darvas box,49.25,7.43,,below,8,3.0,35.35,False
+PTGX,,True,4,7.19,False,92.23,True,Cup completion cheat,96.54,4.62,,below,8,1.49,35.19,False
+ZIM,,True,9,7.97,True,29.97,True,Cup completion cheat,24.47,0.0,2026-02-20,above,8,1.96,35.15,False
+TPR,,True,10,7.61,False,161.97,True,Darvas box,161.97,4.01,,below,8,1.44,34.92,False
+PBR,,True,5,6.03,True,16.92,False,,,,,below,8,1.27,34.85,False
+LUV,,True,6,7.06,False,52.41,True,Darvas box,55.11,10.62,,below,8,1.42,34.7,False
+APH,,True,9,7.15,False,154.05,True,Darvas box,167.04,12.56,,below,8,1.23,34.25,False
+ANRO,,True,3,7.2,False,19.85,True,Cup completion cheat,20.91,5.83,,below,8,4.86,34.0,False
+GM,,True,10,7.27,False,83.93,True,Darvas box,87.62,10.17,,below,7,1.27,33.65,False
+VSCO,,True,4,7.29,False,65.8,True,Cup completion cheat,66.89,6.26,,below,8,2.6,33.55,False
+PRIM,,True,3,6.29,True,156.7,False,,,,,below,8,1.19,33.55,False
+INTC,,True,4,7.3,False,46.97,True,Darvas box,54.6,16.47,,below,8,1.72,33.5,False
+AMX,,True,3,4.3,True,26.06,False,,,,,above,8,1.22,33.5,False
+IE,,True,3,7.31,False,17.23,True,Cup completion cheat,21.55,20.23,,below,8,1.82,33.45,False
+ZYME,,True,4,7.32,False,24.6,True,Low cheat,27.94,16.64,,below,7,1.48,33.4,False
+SYRE,,True,4,6.36,True,44.88,False,,,,,below,8,2.42,33.2,False
+VIK,,True,4,6.37,True,81.47,False,,,,,below,8,1.15,33.15,False
+NGS,,True,5,6.38,True,39.67,False,,,,,below,8,1.37,33.1,False
+EKSO,,True,3,7.4,False,10.41,True,Power Play,13.27,23.61,,below,8,2.45,33.0,False
+HSAI,,True,4,6.44,True,27.96,False,,,,,below,7,0.94,32.8,False
+DSGN,,True,4,7.45,False,11.14,True,Darvas box,11.14,6.28,,below,8,1.74,32.75,False
+TARS,,True,3,7.5,False,76.92,True,Cup completion cheat,84.07,10.17,,below,8,1.22,32.5,False
+HMY,,True,3,7.58,False,22.81,True,Cup completion cheat,26.06,12.7,,below,8,1.7,32.1,False
+ALNT,,True,5,6.6,True,68.29,False,,,,,below,8,1.31,32.0,False
+KALU,,True,4,4.61,True,132.3,False,,,,,above,8,1.58,31.95,False
+TRVI,,True,4,7.62,False,11.95,True,Cup completion cheat,13.22,9.83,,below,8,1.56,31.9,False
+APEI,,True,4,6.63,True,46.48,False,,,,,below,8,1.41,31.85,False
+IVZ,,True,4,7.63,False,27.27,True,Darvas box,29.37,10.6,,below,7,1.14,31.85,False
+NEM,,True,3,6.52,False,131.21,True,Darvas box,134.88,3.62,,above,8,1.69,31.54,False
+SANM,,True,3,7.71,False,164.83,True,Cup completion cheat,185.29,16.21,,below,7,1.22,31.45,False
+AA,,True,3,7.72,False,66.22,True,Cup completion cheat,66.95,7.27,,below,8,1.83,31.4,False
+HLIO,,True,10,7.73,False,76.16,True,Darvas box,76.16,6.36,,below,8,1.23,31.35,False
+AMG,,True,3,6.8,True,318.9,False,,,,,below,7,1.27,31.0,False
+LBRT,,True,4,6.81,True,28.65,False,,,,,below,8,2.36,30.95,False
+SBH,,True,4,7.84,False,16.83,True,Darvas box,17.92,10.32,,below,8,1.13,30.8,False
+IMTX,,True,4,6.86,True,10.5,False,,,,,below,8,1.84,30.7,False
+CELC,,True,4,7.9,False,113.41,True,Darvas box,120.32,7.15,,below,8,1.92,30.5,False
+PLXS,,True,10,7.91,False,208.09,True,Darvas box,211.84,8.36,,below,8,1.31,30.45,False
+FLS,,True,10,6.4,False,92.41,True,Darvas box,92.41,4.21,,above,8,1.53,30.37,False
+ASML,,True,8,7.93,False,1547.22,True,Darvas box,1547.22,6.25,,below,8,1.79,30.35,False
+MTW,,True,9,6.94,True,14.98,False,,,,,below,7,1.38,30.3,False
+EGO,,True,3,7.97,False,46.79,True,Cup completion cheat,51.08,9.12,,below,8,1.82,30.15,False
+RRX,,True,10,7.03,True,227.34,False,,,,,below,8,1.37,29.85,False
+SCHL,,True,4,7.03,True,34.87,False,,,,,below,8,1.28,29.85,False
+TILE,,True,3,5.07,True,32.37,False,,,,,above,8,1.11,29.65,False
+TEX,,True,9,7.1,True,70.89,False,,,,,below,8,1.25,29.5,False
+AEIS,,True,5,7.14,True,347.28,False,,,,,below,8,2.03,29.3,False
+PLOW,,True,3,5.15,True,47.16,False,,,,,above,8,1.29,29.25,False
+SAIA,,True,5,7.45,False,410.61,True,Darvas box,417.85,2.98,,above,8,1.3,28.81,True
+IPX,,True,3,7.25,True,49.46,False,,,,,below,8,1.03,28.75,False
+VIV,,True,5,5.36,True,16.95,False,,,,,above,8,1.26,28.2,False
+MG,,True,8,7.41,True,15.53,False,,,,,below,8,1.51,27.95,False
+REX,,True,8,7.41,True,35.76,False,,,,,below,8,1.04,27.95,False
+ROIV,,True,5,7.43,True,29.2,False,,,,,below,8,2.28,27.85,False
+JBIO,,True,3,7.44,True,14.92,False,,,,,below,5,1.73,27.8,False
+BKD,,True,6,7.45,True,15.7,False,,,,,below,8,1.88,27.75,False
+UI,,True,6,7.48,True,773.89,False,,,,,below,8,1.36,27.6,False
+WT,,True,6,7.49,True,17.48,False,,,,,below,8,1.18,27.55,False
+DGII,,True,5,7.53,True,50.83,False,,,,,below,8,1.32,27.35,False
+PRLB,,True,7,7.54,True,66.35,False,,,,,below,8,1.15,27.3,False
+AGX,,True,3,7.56,True,459.75,False,,,,,below,8,1.76,27.2,False
+LPG,,True,8,7.58,True,37.12,False,,,,,below,8,1.14,27.1,False
+VET,,True,8,7.6,True,10.92,False,,,,,below,8,1.32,27.0,False
+WCC,,True,7,7.6,True,304.51,False,,,,,below,8,1.21,27.0,False
+HXL,,True,5,5.64,True,94.46,False,,,,,above,8,1.37,26.8,False
+WTTR,,True,3,5.67,True,14.19,False,,,,,above,8,1.55,26.65,False
+ORN,,True,3,7.68,True,14.2,False,,,,,below,8,1.69,26.6,False
+AROC,,True,3,5.68,True,35.9,False,,,,,above,8,1.36,26.6,False
+ISSC,,True,3,7.69,True,26.0,False,,,,,below,8,1.82,26.55,False
+IMO,,True,6,7.69,True,122.31,False,,,,,below,8,1.23,26.55,False
+COKE,,True,3,5.77,True,205.0,False,,,,,above,8,1.64,26.15,False
+ATEX,,True,3,7.79,True,38.08,False,,,,,below,7,1.49,26.05,False
+ROAD,,True,6,7.79,True,139.66,False,,,,,below,8,1.04,26.05,False
+GEV,,True,4,7.83,True,894.93,False,,,,,below,8,1.3,25.85,False
+ARW,,True,10,7.83,True,162.61,False,,,,,below,7,1.13,25.85,False
+BHE,,True,6,6.84,False,61.12,True,Cup completion cheat,49.7,0.0,2026-01-30,above,8,1.32,25.8,False
+HSY,,True,5,7.87,True,236.78,False,,,,,below,8,1.25,25.65,False
+MSGS,,True,6,7.49,False,335.08,True,Darvas box,345.46,3.99,,above,8,1.59,25.58,False
+MTRN,,True,3,5.89,True,164.05,False,,,,,above,8,1.39,25.55,False
+STM,,True,10,7.93,True,34.91,False,,,,,below,7,1.15,25.35,False
+BELFA,,True,7,7.94,True,222.7,False,,,,,below,8,1.73,25.3,False
+NSSC,,True,6,5.96,True,47.3,False,,,,,above,8,1.15,25.2,False
+GTX,,True,4,5.97,True,20.53,False,,,,,above,8,1.48,25.15,False
+TCMD,,True,4,6.09,True,30.06,False,,,,,above,8,2.09,24.55,False
+CAT,,True,10,7.09,False,784.0,True,Darvas box,789.81,5.95,,above,8,1.61,24.55,False
+ELAN,,True,3,6.17,True,27.72,False,,,,,above,8,1.35,24.15,False
+KEYS,,True,3,6.18,True,311.81,False,,,,,above,8,1.74,24.1,False
+SAN,,True,8,7.33,False,13.24,True,Darvas box,13.24,6.65,,above,8,1.2,23.35,False
+GNK,,True,8,6.45,True,24.1,False,,,,,above,8,1.33,22.75,False
+EL,,True,3,6.47,True,114.7,False,,,,,above,7,1.13,22.65,False
+E,,True,8,7.48,False,46.95,True,Cup completion cheat,38.47,0.0,2026-01-02,above,8,1.24,22.6,False
+SBLK,,True,8,7.49,False,26.42,True,Cup completion cheat,20.76,0.0,2026-01-23,above,8,1.31,22.55,False
+SHG,,True,10,7.49,False,71.72,True,Darvas box,73.4,8.98,,above,8,1.31,22.55,False
+TK,,True,3,6.53,True,13.02,False,,,,,above,8,1.5,22.35,False
+EQX,,True,3,5.59,False,18.96,False,,,,,below,8,2.13,22.05,False
+JOUT,,True,10,7.61,False,51.66,True,Darvas box,51.66,6.14,,above,8,1.14,21.95,False
+BH,,True,5,7.63,False,396.46,True,Darvas box,483.6,19.81,,above,7,1.14,21.85,False
+BHP,,True,5,6.66,True,82.34,False,,,,,above,8,1.37,21.7,False
+JBL,,True,6,7.66,False,281.37,True,Cup completion cheat,229.07,0.0,2025-12-26,above,8,1.19,21.7,False
+SQM,,True,3,7.78,False,81.67,True,Darvas box,86.13,11.41,,above,8,1.57,21.1,False
+TFII,,True,7,5.9,False,120.9,False,,,,,below,8,1.2,20.5,False
+NHC,,True,8,6.96,True,165.44,False,,,,,above,8,1.37,20.2,False
+ECO,,True,4,6.99,True,54.05,False,,,,,above,8,1.89,20.05,False
+CVE,,True,5,7.05,True,22.97,False,,,,,above,8,1.24,19.75,False
+BWXT,,True,4,7.07,True,215.81,False,,,,,above,8,1.17,19.65,False
+ALSN,,True,4,7.08,True,126.31,False,,,,,above,7,1.35,19.6,False
+MGA,,True,9,7.11,True,67.68,False,,,,,above,8,1.3,19.45,False
+SMFG,,True,9,7.14,True,23.54,False,,,,,above,8,1.28,19.3,False
+CAMT,,True,3,7.16,True,174.61,False,,,,,above,8,1.79,19.2,False
+HG,,True,5,7.16,True,32.21,False,,,,,above,8,1.24,19.2,False
+RUSHA,,True,5,7.16,True,75.02,False,,,,,above,8,1.16,19.2,False
+NBR,,True,7,7.18,True,80.32,False,,,,,above,8,2.02,19.1,False
+TDW,,True,5,7.27,True,82.0,False,,,,,above,8,1.24,18.65,False
+VVX,,True,3,7.27,True,71.15,False,,,,,above,8,1.14,18.65,False
+ASX,,True,4,6.45,False,25.29,False,,,,,below,8,2.29,17.75,False
+PSTL,,True,3,7.45,True,21.13,False,,,,,above,8,1.28,17.75,False
+FTI,,True,5,7.48,True,67.55,False,,,,,above,8,1.68,17.6,False
+DAN,,True,5,6.49,False,36.16,False,,,,,below,8,1.6,17.55,False
+ANDE,,True,8,7.53,True,68.02,False,,,,,above,8,1.52,17.35,False
+SMTC,,True,4,7.6,True,93.96,False,,,,,above,8,1.4,17.0,False
+ESI,,True,4,7.63,True,37.74,False,,,,,above,8,1.28,16.85,False
+GPRE,,True,6,6.65,False,14.43,False,,,,,below,8,1.16,16.75,False
+MATX,,True,4,7.66,True,177.51,False,,,,,above,8,1.49,16.7,False
+ROG,,True,5,7.68,True,111.18,False,,,,,above,8,1.29,16.6,False
+OCS,,True,4,7.69,True,30.68,False,,,,,above,8,1.69,16.55,False
+HCSG,,True,6,7.69,True,21.84,False,,,,,above,8,1.31,16.55,False
+BWLP,,True,7,6.7,False,18.35,False,,,,,below,8,1.11,16.5,False
+PDS,,True,9,7.72,True,92.4,False,,,,,above,8,1.45,16.4,False
+SPHR,,True,3,6.82,False,120.27,False,,,,,below,8,2.46,15.9,False
+TNDM,,True,3,7.84,True,27.05,False,,,,,above,7,2.02,15.8,False
+TBN,,True,5,7.86,True,32.57,False,,,,,above,8,1.49,15.7,False
+PRAX,,True,5,6.87,False,356.0,False,,,,,below,8,6.89,15.65,False
+R,,True,9,7.89,True,228.0,False,,,,,above,8,1.12,15.55,False
+SHIP,,True,4,7.91,True,14.42,False,,,,,above,8,1.71,15.45,False
+TRGP,,True,9,7.91,True,237.5,False,,,,,above,8,1.34,15.45,False
+ESE,,True,8,7.92,True,286.69,False,,,,,above,8,1.28,15.4,False
+TECK,,True,6,6.97,False,62.41,False,,,,,below,8,1.64,15.15,False
+SNCY,,True,6,6.97,False,20.79,False,,,,,below,8,1.42,15.15,False
+CHRW,,True,4,7.01,False,185.62,False,,,,,below,8,1.36,14.95,False
+CVLG,,True,5,7.15,False,29.92,False,,,,,below,7,1.15,14.25,False
+AEM,,True,4,7.32,False,252.78,False,,,,,below,8,1.71,13.4,False
+COHU,,True,6,7.4,False,31.91,False,,,,,below,8,1.4,13.0,False
+SD,,True,4,7.41,False,17.68,False,,,,,below,8,1.42,12.95,False
+ODFL,,True,9,7.45,False,203.86,False,,,,,below,7,1.28,12.75,False
+IAG,,True,3,7.5,False,24.66,False,,,,,below,8,2.58,12.5,False
+BWA,,True,7,7.5,False,61.89,False,,,,,below,8,1.27,12.5,False
+MSGE,,True,4,5.5,False,63.58,False,,,,,above,8,1.45,12.5,False
+XPO,,True,8,7.52,False,212.71,False,,,,,below,8,1.52,12.4,False
+KN,,True,9,7.52,False,28.74,False,,,,,below,8,1.18,12.4,False
+GNRC,,True,4,7.53,False,241.09,False,,,,,below,8,1.13,12.35,False
+HSHP,,True,4,7.56,False,14.95,False,,,,,below,8,1.82,12.2,False
+SKM,,True,7,7.57,False,32.23,False,,,,,below,8,1.29,12.15,False
+CSTM,,True,6,5.64,False,26.06,False,,,,,above,8,1.61,11.8,False
+KLIC,,True,9,7.67,False,72.9,False,,,,,below,8,1.75,11.65,False
+LSCC,,True,6,7.67,False,101.35,False,,,,,below,8,1.35,11.65,False
+GFS,,True,8,7.72,False,48.98,False,,,,,below,7,1.33,11.4,False
+STX,,True,7,7.8,False,426.5,False,,,,,below,8,2.24,11.0,False
+SION,,True,3,7.83,False,39.32,False,,,,,below,7,1.34,10.85,False
+NTR,,True,6,7.83,False,75.73,False,,,,,below,8,1.2,10.85,False
+PBF,,True,3,8.0,False,36.75,False,,,,,below,8,1.28,10.0,False
+KNSA,,True,3,6.43,False,44.56,False,,,,,above,8,1.25,7.85,False
+COCO,,True,3,6.44,False,58.17,False,,,,,above,8,1.55,7.8,False
+LINC,,True,3,6.6,False,36.51,False,,,,,above,8,1.78,7.0,False
+DAC,,True,3,6.9,False,118.45,False,,,,,above,8,1.22,5.5,False
+PLPC,,True,7,6.92,False,267.49,False,,,,,above,8,1.21,5.4,False
+ENLT,,True,4,6.96,False,70.7,False,,,,,above,8,2.23,5.2,False
+FRO,,True,4,7.06,False,37.97,False,,,,,above,8,1.72,4.7,False
+CPS,,True,7,7.17,False,40.42,False,,,,,above,8,1.0,4.15,False
+DIOD,,True,5,7.38,False,71.8,False,,,,,above,8,1.15,3.1,False
+NMM,,True,5,7.45,False,72.77,False,,,,,above,8,1.45,2.75,False
+NESR,,True,4,7.49,False,26.85,False,,,,,above,8,2.6,2.55,False
+VICR,,True,3,7.49,False,205.92,False,,,,,above,8,3.63,2.55,False
+TNK,,True,3,7.5,False,78.68,False,,,,,above,8,1.51,2.5,False
+LIND,,True,5,7.72,False,20.98,False,,,,,above,8,1.25,1.4,False
+KGS,,True,3,7.75,False,55.49,False,,,,,above,8,1.46,1.25,False
+IDCC,,True,4,7.77,False,382.43,False,,,,,above,8,1.27,1.15,False
+CMBT,,True,6,7.8,False,14.93,False,,,,,above,8,1.67,1.0,False
+SDRL,,True,4,7.96,False,45.63,False,,,,,above,8,1.3,0.2,False
+XPRO,,True,3,7.96,False,18.09,False,,,,,above,8,1.34,0.2,False
+AXTI,,False,,,False,,False,,,,,,8,12.21,0.0,False
+ABVX,,False,,,False,,False,,,,,,7,1.4,0.0,False
+AAOI,,False,,,False,,False,,,,,,8,3.11,0.0,False
+ALM,,False,,,False,,False,,,,,,8,3.88,0.0,False
+AG,,False,,,False,,False,,,,,,8,3.36,0.0,False
+BE,,False,,,False,,False,,,,,,8,2.67,0.0,False
+IXHL,,False,,,False,,False,,,,,,2,0.22,0.0,False
+GLTO,,False,,,False,,False,,,,,,8,8.64,0.0,False
+KOD,,False,,,False,,False,,,,,,8,2.81,0.0,False
+ERAS,,False,,,False,,False,,,,,,8,8.18,0.0,False
+HYMC,,False,,,False,,False,,,,,,8,11.17,0.0,False
+LITE,,False,,,False,,False,,,,,,8,4.86,0.0,False
+PL,,False,,,False,,False,,,,,,8,3.15,0.0,False
+PVLA,,False,,,False,,False,,,,,,8,2.48,0.0,False
+SFHG,,False,,,False,,False,,,,,,2,0.76,0.0,False
+SNDK,,False,,,False,,False,,,,,,8,11.75,0.0,False
+AUGO,,False,,,False,,False,,,,,,,,0.0,False
+SNSE,,False,,,False,,False,,,,,,8,3.43,0.0,False
+AEHR,,False,,,False,,False,,,,,,8,1.3,0.0,False
+WDC,,False,,,False,,False,,,,,,8,3.21,0.0,False
+CDE,,False,,,False,,False,,,,,,8,2.03,0.0,False
+CGAU,,False,,,False,,False,,,,,,8,2.53,0.0,False
+BVN,,False,,,False,,False,,,,,,8,2.18,0.0,False
+COHR,,False,,,False,,False,,,,,,8,2.56,0.0,False
+CIEN,,False,,,False,,False,,,,,,8,3.35,0.0,False
+DBVT,,False,,,False,,False,,,,,,8,2.08,0.0,False
+EXK,,False,,,False,,False,,,,,,8,2.22,0.0,False
+FBRX,,False,,,False,,False,,,,,,8,2.53,0.0,False
+FET,,False,,,False,,False,,,,,,8,2.12,0.0,False
+FORM,,False,,,False,,False,,,,,,8,3.15,0.0,False
+GLSI,,False,,,False,,False,,,,,,8,2.28,0.0,False
+ICHR,,False,,,False,,False,,,,,,8,2.54,0.0,False
+KORE,,False,,,False,,False,,,,,,8,3.37,0.0,False
+LASR,,False,,,False,,False,,,,,,8,1.77,0.0,False
+MUX,,False,,,False,,False,,,,,,8,2.42,0.0,False
+NG,,False,,,False,,False,,,,,,8,1.94,0.0,False
+MU,,False,,,False,,False,,,,,,8,3.18,0.0,False
+NGD,,False,,,False,,False,,,,,,8,2.22,0.0,False
+SATS,,False,,,False,,False,,,,,,8,1.91,0.0,False
+SBSW,,False,,,False,,False,,,,,,8,2.29,0.0,False
+SEPN,,False,,,False,,False,,,,,,8,2.22,0.0,False
+SKYT,,False,,,False,,False,,,,,,8,2.25,0.0,False
+SIF,,False,,,False,,False,,,,,,8,1.96,0.0,False
+SVM,,False,,,False,,False,,,,,,8,2.82,0.0,False
+TTMI,,False,,,False,,False,,,,,,8,2.09,0.0,False
+TER,,False,,,False,,False,,,,,,8,2.56,0.0,False
+TYRA,,False,,,False,,False,,,,,,8,2.53,0.0,False
+UCTT,,False,,,False,,False,,,,,,8,2.3,0.0,False
+UUUU,,False,,,False,,False,,,,,,8,1.72,0.0,False
+VSAT,,False,,,False,,False,,,,,,8,1.32,0.0,False
+WULF,,False,,,False,,False,,,,,,8,1.62,0.0,False
+AMLX,,False,,,False,,False,,,,,,8,1.51,0.0,False
+AVTX,,False,,,False,,False,,,,,,8,1.76,0.0,False
+ATRO,,False,,,False,,False,,,,,,8,2.0,0.0,False
+BELFB,,False,,,False,,False,,,,,,8,1.59,0.0,False
+CTNM,,False,,,False,,False,,,,,,8,1.44,0.0,False
+ELVR,,False,,,False,,False,,,,,,,,0.0,False
+CENX,,False,,,False,,False,,,,,,8,2.17,0.0,False
+DRD,,False,,,False,,False,,,,,,8,2.05,0.0,False
+EFXT,,False,,,False,,False,,,,,,8,2.09,0.0,False
+FIGS,,False,,,False,,False,,,,,,8,2.03,0.0,False
+FEIM,,False,,,False,,False,,,,,,7,1.44,0.0,False
+FIX,,False,,,False,,False,,,,,,8,1.84,0.0,False
+GLW,,False,,,False,,False,,,,,,8,2.07,0.0,False
+IDR,,False,,,False,,False,,,,,,8,1.45,0.0,False
+KLRS,,False,,,False,,False,,,,,,8,2.76,0.0,False
+FSLY,,False,,,False,,False,,,,,,8,2.33,0.0,False
+HUT,,False,,,False,,False,,,,,,7,1.89,0.0,False
+LRCX,,False,,,False,,False,,,,,,8,2.12,0.0,False
+KYMR,,False,,,False,,False,,,,,,8,2.06,0.0,False
+MKSI,,False,,,False,,False,,,,,,8,2.14,0.0,False
+OIS,,False,,,False,,False,,,,,,8,2.21,0.0,False
+NEXA,,False,,,False,,False,,,,,,8,2.63,0.0,False
+PACS,,False,,,False,,False,,,,,,7,2.96,0.0,False
+POWL,,False,,,False,,False,,,,,,8,1.82,0.0,False
+PPTA,,False,,,False,,False,,,,,,8,1.88,0.0,False
+RLAY,,False,,,False,,False,,,,,,8,2.62,0.0,False
+SLSR,,False,,,False,,False,,,,,,8,1.84,0.0,False
+SIFY,,False,,,False,,False,,,,,,8,1.56,0.0,False
+SRZN,,False,,,False,,False,,,,,,8,2.24,0.0,False
+AGCC,,False,,,False,,False,,,,,,,,0.0,False
+VIAV,,False,,,False,,False,,,,,,8,2.48,0.0,False
+AMKR,,False,,,False,,False,,,,,,8,1.83,0.0,False
+ALB,,False,,,False,,False,,,,,,8,2.0,0.0,False
+CNL,,False,,,False,,False,,,,,,8,1.51,0.0,False
+DNTH,,False,,,False,,False,,,,,,8,2.09,0.0,False
+ERO,,False,,,False,,False,,,,,,8,2.29,0.0,False
+CYD,,False,,,False,,False,,,,,,8,1.43,0.0,False
+FTAI,,False,,,False,,False,,,,,,8,1.85,0.0,False
+GSAT,,False,,,False,,False,,,,,,8,2.04,0.0,False
+INDV,,False,,,False,,False,,,,,,7,1.29,0.0,False
+MOD,,False,,,False,,False,,,,,,8,1.5,0.0,False
+ORLA,,False,,,False,,False,,,,,,8,1.89,0.0,False
+NAT,,False,,,False,,False,,,,,,8,1.79,0.0,False
+RFIL,,False,,,False,,False,,,,,,8,1.47,0.0,False
+RVMD,,False,,,False,,False,,,,,,8,2.5,0.0,False
+SSRM,,False,,,False,,False,,,,,,8,1.65,0.0,False
+STRO,,False,,,False,,False,,,,,,8,2.14,0.0,False
+STRL,,False,,,False,,False,,,,,,8,1.38,0.0,False
+TSEM,,False,,,False,,False,,,,,,7,1.93,0.0,False
+VRT,,False,,,False,,False,,,,,,8,1.79,0.0,False
+AGI,,False,,,False,,False,,,,,,8,1.72,0.0,False
+BDSX,,False,,,False,,False,,,,,,8,1.62,0.0,False
+BWAY,,False,,,False,,False,,,,,,8,1.42,0.0,False
+CAMP,,False,,,False,,False,,,,,,6,2.85,0.0,False
+CGON,,False,,,False,,False,,,,,,8,2.07,0.0,False
+CTGO,,False,,,False,,False,,,,,,8,1.34,0.0,False
+ECG,,False,,,False,,False,,,,,,8,1.42,0.0,False
+FN,,False,,,False,,False,,,,,,8,1.45,0.0,False
+GCT,,False,,,False,,False,,,,,,8,1.6,0.0,False
+HOOZ,,False,,,False,,False,,,,,,,,0.0,False
+KSLV,,False,,,False,,False,,,,,,,,0.0,False
+INSW,,False,,,False,,False,,,,,,8,1.62,0.0,False
+IPGP,,False,,,False,,False,,,,,,8,1.46,0.0,False
+LYEL,,False,,,False,,False,,,,,,6,2.03,0.0,False
+PARK,,False,,,False,,False,,,,,,,,0.0,False
+ONTO,,False,,,False,,False,,,,,,8,1.86,0.0,False
+NVRI,,False,,,False,,False,,,,,,8,1.61,0.0,False
+PLAB,,False,,,False,,False,,,,,,8,1.49,0.0,False
+RLYB,,False,,,False,,False,,,,,,8,1.58,0.0,False
+SGML,,False,,,False,,False,,,,,,8,2.09,0.0,False
+SITM,,False,,,False,,False,,,,,,8,1.54,0.0,False
+SIMO,,False,,,False,,False,,,,,,8,1.48,0.0,False
+XOMX,,False,,,False,,False,,,,,,,,0.0,False
+TEN,,False,,,False,,False,,,,,,8,1.52,0.0,False
+TIGO,,False,,,False,,False,,,,,,8,1.49,0.0,False
+UEC,,False,,,False,,False,,,,,,7,1.38,0.0,False
+USAU,,False,,,False,,False,,,,,,8,1.56,0.0,False
+VOXR,,False,,,False,,False,,,,,,8,1.74,0.0,False
+WHWK,,False,,,False,,False,,,,,,8,1.87,0.0,False
+AIP,,False,,,False,,False,,,,,,8,1.63,0.0,False
+CGEM,,False,,,False,,False,,,,,,8,1.92,0.0,False
+CMCL,,False,,,False,,False,,,,,,8,1.2,0.0,False
+CODA,,False,,,False,,False,,,,,,8,1.59,0.0,False
+DHT,,False,,,False,,False,,,,,,8,1.6,0.0,False
+ENTG,,False,,,False,,False,,,,,,8,1.49,0.0,False
+ESTA,,False,,,False,,False,,,,,,8,1.81,0.0,False
+LGN,,False,,,False,,False,,,,,,,,0.0,False
+IESC,,False,,,False,,False,,,,,,8,1.29,0.0,False
+NVMI,,False,,,False,,False,,,,,,8,1.49,0.0,False
+MTZ,,False,,,False,,False,,,,,,8,1.52,0.0,False
+MOG.A,,False,,,False,,False,,,,,,,,0.0,False
+SOLS,,False,,,False,,False,,,,,,,,0.0,False
+PPIH,,False,,,False,,False,,,,,,7,0.98,0.0,False
+PUMP,,False,,,False,,False,,,,,,8,2.27,0.0,False
+PAHC,,False,,,False,,False,,,,,,8,1.34,0.0,False
+RILYZ,,False,,,False,,False,,,,,,8,1.22,0.0,False
+RAIL,,False,,,False,,False,,,,,,8,1.47,0.0,False
+STNG,,False,,,False,,False,,,,,,8,1.49,0.0,False
+TXG,,False,,,False,,False,,,,,,8,1.52,0.0,False
+THR,,False,,,False,,False,,,,,,8,1.8,0.0,False
+APGE,,False,,,False,,False,,,,,,7,1.8,0.0,False
+BTSG,,False,,,False,,False,,,,,,8,1.64,0.0,False
+CLMT,,False,,,False,,False,,,,,,8,1.55,0.0,False
+VISN,,False,,,False,,False,,,,,,7,1.04,0.0,False
+CLS,,False,,,False,,False,,,,,,7,1.23,0.0,False
+YOU,,False,,,False,,False,,,,,,8,1.25,0.0,False
+DCO,,False,,,False,,False,,,,,,8,1.27,0.0,False
+ECPG,,False,,,False,,False,,,,,,8,1.55,0.0,False
+ENTA,,False,,,False,,False,,,,,,8,1.55,0.0,False
+ESOA,,False,,,False,,False,,,,,,8,1.44,0.0,False
+INTT,,False,,,False,,False,,,,,,8,1.53,0.0,False
+ISOU,,False,,,False,,False,,,,,,8,1.4,0.0,False
+MITK,,False,,,False,,False,,,,,,8,1.35,0.0,False
+NPKI,,False,,,False,,False,,,,,,8,1.3,0.0,False
+NWPX,,False,,,False,,False,,,,,,8,1.35,0.0,False
+PARR,,False,,,False,,False,,,,,,8,1.18,0.0,False
+PKE,,False,,,False,,False,,,,,,8,1.33,0.0,False
+TPB,,False,,,False,,False,,,,,,8,1.29,0.0,False
+TRMD,,False,,,False,,False,,,,,,8,1.35,0.0,False
+WF,,False,,,False,,False,,,,,,8,1.3,0.0,False
+ARQT,,False,,,False,,False,,,,,,7,1.64,0.0,False
+CMDB,,False,,,False,,False,,,,,,,,0.0,False
+ASC,,False,,,False,,False,,,,,,8,1.33,0.0,False
+CTRI,,False,,,False,,False,,,,,,8,1.38,0.0,False
+CMRE,,False,,,False,,False,,,,,,8,1.43,0.0,False
+DAKT,,False,,,False,,False,,,,,,8,1.39,0.0,False
+EWTX,,False,,,False,,False,,,,,,8,1.95,0.0,False
+IBP,,False,,,False,,False,,,,,,8,1.17,0.0,False
+MYRG,,False,,,False,,False,,,,,,8,1.33,0.0,False
+OII,,False,,,False,,False,,,,,,8,1.36,0.0,False
+RCUS,,False,,,False,,False,,,,,,7,1.81,0.0,False
+TSAT,,False,,,False,,False,,,,,,8,1.41,0.0,False
+TWST,,False,,,False,,False,,,,,,7,1.66,0.0,False
+VSEC,,False,,,False,,False,,,,,,8,1.32,0.0,False
+AAMI,,False,,,False,,False,,,,,,7,0.99,0.0,False
+ALGT,,False,,,False,,False,,,,,,8,1.54,0.0,False
+ASTE,,False,,,False,,False,,,,,,8,1.25,0.0,False
+DBD,,False,,,False,,False,,,,,,8,1.21,0.0,False
+CGNX,,False,,,False,,False,,,,,,8,1.17,0.0,False
+DXPE,,False,,,False,,False,,,,,,8,1.04,0.0,False
+EE,,False,,,False,,False,,,,,,8,1.53,0.0,False
+IMVT,,False,,,False,,False,,,,,,8,1.76,0.0,False
+KB,,False,,,False,,False,,,,,,8,1.3,0.0,False
+LGCY,,False,,,False,,False,,,,,,8,1.04,0.0,False
+LFUS,,False,,,False,,False,,,,,,8,1.26,0.0,False
+MPWR,,False,,,False,,False,,,,,,8,1.26,0.0,False
+OUT,,False,,,False,,False,,,,,,8,1.49,0.0,False
+REZI,,False,,,False,,False,,,,,,8,1.06,0.0,False
+VRDN,,False,,,False,,False,,,,,,7,1.5,0.0,False
+VTRS,,False,,,False,,False,,,,,,8,1.36,0.0,False
+AES,,False,,,False,,False,,,,,,8,1.24,0.0,False
+AMRX,,False,,,False,,False,,,,,,8,1.36,0.0,False
+CC,,False,,,False,,False,,,,,,8,1.15,0.0,False
+IMAX,,False,,,False,,False,,,,,,8,1.4,0.0,False
+LBRX,,False,,,False,,False,,,,,,,,0.0,False
+INVX,,False,,,False,,False,,,,,,8,1.44,0.0,False
+LXU,,False,,,False,,False,,,,,,8,1.3,0.0,False
+LHX,,False,,,False,,False,,,,,,8,1.25,0.0,False
+NGVT,,False,,,False,,False,,,,,,8,1.17,0.0,False
+NVAX,,False,,,False,,False,,,,,,8,1.26,0.0,False
+Q,,False,,,False,,False,,,,,,,,0.0,False
+PHIN,,False,,,False,,False,,,,,,8,1.17,0.0,False
+PCVX,,False,,,False,,False,,,,,,8,1.89,0.0,False
+OSK,,False,,,False,,False,,,,,,8,1.13,0.0,False
+QXO,,False,,,False,,False,,,,,,8,1.07,0.0,False
+TBPH,,False,,,False,,False,,,,,,7,1.23,0.0,False
+APA,,False,,,False,,False,,,,,,8,1.27,0.0,False
+HCC,,False,,,False,,False,,,,,,7,1.33,0.0,False
+JOE,,False,,,False,,False,,,,,,8,1.34,0.0,False
+NAMS,,False,,,False,,False,,,,,,8,1.39,0.0,False
+NXST,,False,,,False,,False,,,,,,8,1.19,0.0,False
+ON,,False,,,False,,False,,,,,,8,1.23,0.0,False
+SEI,,False,,,False,,False,,,,,,7,1.48,0.0,False
+SNDX,,False,,,False,,False,,,,,,8,1.25,0.0,False
+SUPN,,False,,,False,,False,,,,,,8,1.13,0.0,False
+TRDA,,False,,,False,,False,,,,,,8,1.99,0.0,False
+WLK,,False,,,False,,False,,,,,,8,1.16,0.0,False
+BEAM,,False,,,False,,False,,,,,,7,1.59,0.0,False
+CYTK,,False,,,False,,False,,,,,,7,1.57,0.0,False
+ECVT,,False,,,False,,False,,,,,,8,1.16,0.0,False
+GOLF,,False,,,False,,False,,,,,,8,1.26,0.0,False
+JAZZ,,False,,,False,,False,,,,,,8,1.42,0.0,False
+LGND,,False,,,False,,False,,,,,,8,1.17,0.0,False
+LIVN,,False,,,False,,False,,,,,,8,1.2,0.0,False
+NATL,,False,,,False,,False,,,,,,8,1.05,0.0,False
+SENEA,,False,,,False,,False,,,,,,8,1.16,0.0,False
+UTHR,,False,,,False,,False,,,,,,8,1.54,0.0,False
+BKV,,False,,,False,,False,,,,,,8,1.26,0.0,False
+CLDX,,False,,,False,,False,,,,,,8,1.26,0.0,False
+EGBN,,False,,,False,,False,,,,,,8,1.24,0.0,False
+SFST,,False,,,False,,False,,,,,,8,1.16,0.0,False
+VTOL,,False,,,False,,False,,,,,,8,1.17,0.0,False
