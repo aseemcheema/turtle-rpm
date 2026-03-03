@@ -48,3 +48,6 @@ Thumbs.db
 *.tmp
 *.bak
 
+# E*TRADE orders (local SQLite)
+data/etrade_orders.db
+
