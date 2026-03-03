@@ -27,6 +27,7 @@ pg = st.navigation([
     ),
     st.Page("pages/3_portfolio.py", title="Portfolio", icon="💼"),
     st.Page("pages/4_orders.py", title="Orders", icon="📜"),
+    st.Page("pages/5_big_picture.py", title="Big Picture", icon="🖼️"),
 ])
 
 with st.sidebar:
