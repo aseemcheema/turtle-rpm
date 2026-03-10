@@ -59,6 +59,31 @@ The Specific Entry Point Analysis page includes a **Liquidity risk** section tha
 
 Defaults are 5 days to exit and 25% of ADV per day; the underlying logic lives in `turtle_rpm.liquidity` and can be tuned there or (in the future) via the UI.
 
+## Jupyter notebooks
+
+Research notebooks live in `notebooks/`. To launch Jupyter and open a notebook:
+
+```bash
+uv run jupyter notebook notebooks/sepa_entry_points.ipynb
+```
+
+Or with JupyterLab:
+
+```bash
+uv run jupyter lab notebooks/sepa_entry_points.ipynb
+```
+
+To execute a notebook headlessly and save the output in place:
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/sepa_entry_points.ipynb
+```
+
+Available notebooks:
+
+- **sepa_entry_points.ipynb** — Identify and evaluate SEPA entry points: base detection (Cup & Handle, Double Bottom, Darvas Box, Power Play), VCP contractions, pivot points, Trend Template, Fab 5 fundamentals, and composite scoring.
+- **sepa_entry_analysis.ipynb** — Historical SEPA edge research: forward return analysis by entry rule and base type.
+
 ## Pivot breakout daily scan
 
 Run **after market close** to compute pivots for all symbols, rank by quality, and flag potential pivot breakouts for the next day:
