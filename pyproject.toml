@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "turtle-rpm"
 version = "0.1.0"
 description = "Risk and portfolio management tool for the Turtle trading system"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "streamlit>=1.36.0",
     "streamlit-searchbox>=0.1.20",

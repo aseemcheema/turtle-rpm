@@ -2,7 +2,7 @@
 Risk and portfolio management tool for the Turtle trading system. Built with Streamlit.
 
 ## Requirements
-- Python 3.12+
+- Python 3.11+
 - `uv` for installing Python packages (or `pip` as an alternative)
 - Declared dependency: `streamlit>=1.36.0` (see `pyproject.toml`)
 
