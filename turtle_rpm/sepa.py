@@ -13,7 +13,6 @@ from datetime import datetime
 from typing import Any
 
 import pandas as pd
-import pandas_ta as ta
 import yfinance as yf
 
 logger = logging.getLogger(__name__)
@@ -509,15 +508,13 @@ def find_bases(
         return results
     if len(df_daily) < MIN_DAILY_BARS:
         return results
-    # Add ATR (pandas-ta) for VCP volatility-contraction check
+    # ATR for VCP volatility-contraction check (Wilder smoothing, length=14)
     df_daily_atr = df_daily.copy()
-    atr_series = ta.atr(
-        high=df_daily_atr["High"],
-        low=df_daily_atr["Low"],
-        close=df_daily_atr["Close"],
-        length=14,
-    )
-    df_daily_atr["ATR"] = atr_series
+    hl = df_daily_atr["High"] - df_daily_atr["Low"]
+    hc = (df_daily_atr["High"] - df_daily_atr["Close"].shift(1)).abs()
+    lc = (df_daily_atr["Low"] - df_daily_atr["Close"].shift(1)).abs()
+    tr = pd.concat([hl, hc, lc], axis=1).max(axis=1)
+    df_daily_atr["ATR"] = tr.ewm(alpha=1.0 / 14, min_periods=14, adjust=False).mean()
     pivot_highs, pivot_lows = _pivot_highs_lows(df_weekly)
 
     if debug:
